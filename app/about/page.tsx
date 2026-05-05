@@ -188,8 +188,8 @@ export default function AboutPage() {
             <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 text-primary-foreground/90">
               <div className="flex items-center justify-center gap-2">
                 <span>Email:</span>
-                <a href="mailto:support@nextfundus.com" className="font-medium hover:text-primary-foreground">
-                  support@nextfundus.com
+                <a href="mailto:info@nextfundus.com" className="font-medium hover:text-primary-foreground">
+                  info@nextfundus.com
                 </a>
               </div>
               <div className="hidden sm:block">|</div>

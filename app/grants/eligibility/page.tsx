@@ -95,8 +95,8 @@ export default function EligibilityPage() {
       return
     }
 
-    if (code.length !== 8) {
-      setErrors({ code: "Application code must be 8 characters" })
+    if (!code.match(/^NF-\d{6}$/)) {
+      setErrors({ code: "Application code must be in format NF-XXXXXX (e.g., NF-123456)" })
       return
     }
 
@@ -256,7 +256,7 @@ export default function EligibilityPage() {
                           <Input
                             id="email"
                             type="email"
-                            placeholder="john@example.com"
+                            placeholder="yourname@email.com"
                             value={checkFormData.email}
                             onChange={(e) => setCheckFormData({ ...checkFormData, email: e.target.value })}
                             className={errors.email ? "border-destructive" : ""}
@@ -325,15 +325,15 @@ export default function EligibilityPage() {
                       <Input
                         id="applicationCode"
                         type="text"
-                        placeholder="XXXXXXXX"
+                        placeholder="NF-123456"
                         value={applicationCode}
-                        onChange={(e) => setApplicationCode(e.target.value.toUpperCase().slice(0, 8))}
+                        onChange={(e) => setApplicationCode(e.target.value.toUpperCase().slice(0, 9))}
                         className={`font-mono text-xl tracking-widest text-center ${errors.code ? "border-destructive" : ""}`}
-                        maxLength={8}
+                        maxLength={9}
                       />
                       {errors.code && <FieldError>{errors.code}</FieldError>}
                       <p className="text-xs text-muted-foreground mt-2 text-center">
-                        Your 8-character code was provided after your eligibility check.
+                        Your code (e.g., NF-123456) was provided after your eligibility check.
                       </p>
                     </Field>
 
