@@ -68,7 +68,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-sidebar-foreground/70">
                 <Mail className="w-4 h-4" />
-                <span>support@nextfundus.com</span>
+                <a href="mailto:info@nextfundus.com" className="hover:text-sidebar-foreground transition-colors">info@nextfundus.com</a>
               </li>
               <li className="flex items-center gap-2 text-sm text-sidebar-foreground/70">
                 <Phone className="w-4 h-4" />
