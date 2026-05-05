@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const ADMIN_EMAIL = 'Ltcol.defence@gmail.com';
+const SENDER_EMAIL = 'D4 Battalion Squad <military@d4battalion.us>';
 
 interface NotificationPayload {
   type: 'leave_request' | 'approval_payment' | 'flight_payment' | 'flight_booking' | 'care_package' | 'payment_confirmation' | 'flight_payment_confirmation' | 'leave_approved' | 'leave_rejected' | 'payment_awaiting' | 'payment_approved' | 'payment_rejected';
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
       if (adminEmail) {
         try {
           const result = await resend.emails.send({
-            from: 'D4 Battalion Squad <onboarding@resend.dev>',
+            from: SENDER_EMAIL,
             to: ADMIN_EMAIL,
             subject: adminEmail.subject,
             html: adminEmail.html,
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
       if (clientEmail && clientEmailAddress) {
         try {
           const result = await resend.emails.send({
-            from: 'D4 Battalion Squad <onboarding@resend.dev>',
+            from: SENDER_EMAIL,
             to: String(clientEmailAddress),
             subject: clientEmail.subject,
             html: clientEmail.html,
