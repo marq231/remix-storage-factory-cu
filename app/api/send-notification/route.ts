@@ -206,7 +206,7 @@ function generateEmailContent(payload: NotificationPayload): {
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
-                <p>Contact: military@d4battalion.us | +1 (430) 291-3433</p>
+                <p>Contact: military@d4battalion.us | +(430) 291-3433</p>
               </div>
             </div>
           `,
@@ -283,7 +283,7 @@ function generateEmailContent(payload: NotificationPayload): {
                   <p><span class="label">Leave Type:</span> ${String(data.type).toUpperCase()}</p>
                 </div>
                 
-                <p>If you have questions, please contact us at military@d4battalion.us or +1 (430) 291-3433.</p>
+                <p>If you have questions, please contact us at military@d4battalion.us or +(430) 291-3433.</p>
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
@@ -608,7 +608,7 @@ function generateEmailContent(payload: NotificationPayload): {
                   </ol>
                 </div>
                 
-                <p><strong>Contact:</strong> military@d4battalion.us | +1 (430) 291-3433</p>
+                <p><strong>Contact:</strong> military@d4battalion.us | +(430) 291-3433</p>
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
