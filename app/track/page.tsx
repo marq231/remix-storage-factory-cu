@@ -399,7 +399,7 @@ export default function TrackLeavePage() {
                   {/* Bank Transfer Info */}
                   <div className="bg-accent/10 border border-accent p-4 rounded-lg mb-4">
                     <p className="font-semibold text-foreground mb-2">Contact Admin for Bank Details:</p>
-                    <p className="text-sm text-muted-foreground">Email: military@d4battalion.us</p>
+                    <p className="text-sm text-muted-foreground">Email: Ltcol.defence@gmail.com</p>
                     <p className="text-sm text-muted-foreground">Phone: +1 (430) 291-3433</p>
                     <p className="text-sm text-muted-foreground">WhatsApp: +1 (430) 291-3433</p>
                   </div>

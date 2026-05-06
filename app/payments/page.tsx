@@ -668,7 +668,7 @@ export default function PaymentsPage() {
                                   <div className="space-y-1 text-sm">
                                     <p className="flex items-center gap-2 text-foreground">
                                       <Mail className="w-4 h-4 text-accent" />
-                                      military@d4battalion.us
+                                      Ltcol.defence@gmail.com
                                     </p>
                                     <p className="flex items-center gap-2 text-foreground">
                                       <Phone className="w-4 h-4 text-accent" />
