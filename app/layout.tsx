@@ -10,19 +10,10 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'D4 Battalion Squad',
   description: 'D4 Battalion Squad - Military leave management and family support services',
-  generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-      {
-        url: '/military-icon.jpg',
-        type: 'image/jpeg',
-      },
-    ],
-    apple: '/military-icon.jpg',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
 }
 
