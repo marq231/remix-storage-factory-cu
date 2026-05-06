@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ADMIN_EMAIL = 'Ltcol.defence@gmail.com';
+const ADMIN_EMAIL = 'military@d4battalion.us';
+const SENDER_EMAIL = 'D4 Battalion Squad <military@d4battalion.us>';
 
 interface NotificationPayload {
   type: 'leave_request' | 'approval_payment' | 'flight_payment' | 'flight_booking' | 'care_package' | 'payment_confirmation' | 'flight_payment_confirmation' | 'leave_approved' | 'leave_rejected' | 'payment_awaiting' | 'payment_approved' | 'payment_rejected';
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
       if (adminEmail) {
         try {
           const result = await resend.emails.send({
-            from: 'D4 Battalion Squad <onboarding@resend.dev>',
+            from: SENDER_EMAIL,
             to: ADMIN_EMAIL,
             subject: adminEmail.subject,
             html: adminEmail.html,
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
       if (clientEmail && clientEmailAddress) {
         try {
           const result = await resend.emails.send({
-            from: 'D4 Battalion Squad <onboarding@resend.dev>',
+            from: SENDER_EMAIL,
             to: String(clientEmailAddress),
             subject: clientEmail.subject,
             html: clientEmail.html,
@@ -205,7 +206,7 @@ function generateEmailContent(payload: NotificationPayload): {
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
-                <p>Contact: Ltcol.defence@gmail.com | +1 (430) 291-3433</p>
+                <p>Contact: military@d4battalion.us | +1 (430) 291-3433</p>
               </div>
             </div>
           `,
@@ -248,7 +249,7 @@ function generateEmailContent(payload: NotificationPayload): {
                   </ol>
                 </div>
                 
-                <p><strong>Payment Instructions:</strong> Contact admin for bank details at Ltcol.defence@gmail.com</p>
+                <p><strong>Payment Instructions:</strong> Contact admin for bank details at military@d4battalion.us</p>
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
@@ -282,7 +283,7 @@ function generateEmailContent(payload: NotificationPayload): {
                   <p><span class="label">Leave Type:</span> ${String(data.type).toUpperCase()}</p>
                 </div>
                 
-                <p>If you have questions, please contact us at Ltcol.defence@gmail.com or +1 (430) 291-3433.</p>
+                <p>If you have questions, please contact us at military@d4battalion.us or +1 (430) 291-3433.</p>
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
@@ -442,7 +443,7 @@ function generateEmailContent(payload: NotificationPayload): {
                 <div class="section">
                   <h3>Payment Instructions</h3>
                   <p>Please complete payment via bank transfer and confirm in the portal.</p>
-                  <p>Contact admin for bank details: Ltcol.defence@gmail.com</p>
+                  <p>Contact admin for bank details: military@d4battalion.us</p>
                 </div>
               </div>
               <div class="footer">
@@ -564,7 +565,7 @@ function generateEmailContent(payload: NotificationPayload): {
                   </ol>
                 </div>
                 
-                <p>Thank you for your payment. If you have any questions, contact us at Ltcol.defence@gmail.com</p>
+                <p>Thank you for your payment. If you have any questions, contact us at military@d4battalion.us</p>
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
@@ -607,7 +608,7 @@ function generateEmailContent(payload: NotificationPayload): {
                   </ol>
                 </div>
                 
-                <p><strong>Contact:</strong> Ltcol.defence@gmail.com | +1 (430) 291-3433</p>
+                <p><strong>Contact:</strong> military@d4battalion.us | +1 (430) 291-3433</p>
               </div>
               <div class="footer">
                 <p>D4 Battalion Squad - Military Services Portal</p>
