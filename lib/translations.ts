@@ -109,6 +109,25 @@ type TranslationData = {
     home: string;
     required: string;
   };
+  track: {
+    title: string;
+    subtitle: string;
+    placeholder: string;
+    button: string;
+    searching: string;
+    notFound: string;
+    notFoundDesc: string;
+    needHelp: string;
+    needHelpDesc: string;
+    status: string;
+    paymentStatus: string;
+    leaveAmount: string;
+    leaveType: string;
+    duration: string;
+    applicant: string;
+    soldier: string;
+    submitted: string;
+  };
 };
 
 export const translations: Record<string, TranslationData> = {
@@ -213,7 +232,7 @@ export const translations: Record<string, TranslationData> = {
     footer: {
       support: 'Support',
       email: 'Email: military@d4battalion.us',
-      phone: 'Phone: +(430) 291-3433',
+      phone: 'Phone: +1 (430) 291-3433',
       whatsapp: 'WhatsApp Support',
       contactUs: 'Contact Us',
       copyright: '© 2024 Military Services Portal. All rights reserved.',
@@ -230,6 +249,26 @@ export const translations: Record<string, TranslationData> = {
       back: 'Back',
       home: 'Home',
       required: 'Required',
+    },
+    // Track Page
+    track: {
+      title: 'Track Your Application',
+      subtitle: 'Enter your tracking code to check the status of your application',
+      placeholder: 'Enter tracking code (e.g., LV-XXXXXX)',
+      button: 'Track Status',
+      searching: 'Searching...',
+      notFound: 'Application Not Found',
+      notFoundDesc: 'No application found with this tracking code. Please check and try again.',
+      needHelp: 'Need Help?',
+      needHelpDesc: 'If you have lost your tracking code or need assistance, please contact our support team.',
+      status: 'Status',
+      paymentStatus: 'Payment Status',
+      leaveAmount: 'Leave Amount',
+      leaveType: 'Leave Type',
+      duration: 'Duration',
+      applicant: 'Applicant',
+      soldier: 'Soldier',
+      submitted: 'Submitted',
     },
   },
   es: {
@@ -333,7 +372,7 @@ export const translations: Record<string, TranslationData> = {
     footer: {
       support: 'Soporte',
       email: 'Correo: military@d4battalion.us',
-      phone: 'Teléfono: +(430) 291-3433',
+      phone: 'Teléfono: +1 (430) 291-3433',
       whatsapp: 'Soporte WhatsApp',
       contactUs: 'Contáctenos',
       copyright: '© 2024 Portal de Servicios Militares. Todos los derechos reservados.',
@@ -350,6 +389,26 @@ export const translations: Record<string, TranslationData> = {
       back: 'Atrás',
       home: 'Inicio',
       required: 'Requerido',
+    },
+    // Track Page
+    track: {
+      title: 'Seguir su Solicitud',
+      subtitle: 'Ingrese su código de seguimiento para verificar el estado de su solicitud',
+      placeholder: 'Ingrese código de seguimiento (ej., LV-XXXXXX)',
+      button: 'Verificar Estado',
+      searching: 'Buscando...',
+      notFound: 'Solicitud No Encontrada',
+      notFoundDesc: 'No se encontró ninguna solicitud con este código de seguimiento. Verifique e intente de nuevo.',
+      needHelp: '¿Necesita Ayuda?',
+      needHelpDesc: 'Si ha perdido su código de seguimiento o necesita asistencia, contacte a nuestro equipo de soporte.',
+      status: 'Estado',
+      paymentStatus: 'Estado de Pago',
+      leaveAmount: 'Monto de Permiso',
+      leaveType: 'Tipo de Permiso',
+      duration: 'Duración',
+      applicant: 'Solicitante',
+      soldier: 'Soldado',
+      submitted: 'Enviado',
     },
   },
   fr: {
@@ -453,7 +512,7 @@ export const translations: Record<string, TranslationData> = {
     footer: {
       support: 'Support',
       email: 'Courrier: military@d4battalion.us',
-      phone: 'Téléphone: +(430) 291-3433',
+      phone: 'Téléphone: +1 (430) 291-3433',
       whatsapp: 'Support WhatsApp',
       contactUs: 'Nous Contacter',
       copyright: '© 2024 Portail des Services Militaires. Tous droits réservés.',
@@ -471,6 +530,26 @@ export const translations: Record<string, TranslationData> = {
       home: 'Accueil',
       required: 'Requis',
     },
+    // Track Page
+    track: {
+      title: 'Suivre Votre Demande',
+      subtitle: 'Entrez votre code de suivi pour vérifier le statut de votre demande',
+      placeholder: 'Entrez le code de suivi (ex., LV-XXXXXX)',
+      button: 'Vérifier le Statut',
+      searching: 'Recherche...',
+      notFound: 'Demande Non Trouvée',
+      notFoundDesc: 'Aucune demande trouvée avec ce code de suivi. Veuillez vérifier et réessayer.',
+      needHelp: 'Besoin d\'Aide?',
+      needHelpDesc: 'Si vous avez perdu votre code de suivi ou avez besoin d\'assistance, contactez notre équipe de support.',
+      status: 'Statut',
+      paymentStatus: 'Statut de Paiement',
+      leaveAmount: 'Montant du Congé',
+      leaveType: 'Type de Congé',
+      duration: 'Durée',
+      applicant: 'Demandeur',
+      soldier: 'Soldat',
+      submitted: 'Soumis',
+    },
   },
   // German
   de: {
@@ -480,8 +559,9 @@ export const translations: Record<string, TranslationData> = {
     leave: { title: 'Urlaubsantrag', applyFor: 'Urlaub beantragen', leaveType: 'Urlaubsart', emergency: 'Notfallurlaub', vacation: 'Erholungsurlaub', medical: 'Krankenurlaub', soldierName: 'Name des Soldaten', soldierRank: 'Rang des Soldaten', soldierID: 'Soldaten-ID', relationshipToSoldier: 'Ihre Beziehung zum Soldaten', startDate: 'Startdatum', endDate: 'Enddatum', reason: 'Urlaubsgrund', attachments: 'Anhänge (Optional)', submit: 'Urlaubsantrag einreichen', submitted: 'Urlaubsantrag erfolgreich eingereicht', error: 'Fehler beim Einreichen des Urlaubsantrags', status: 'Status', pending: 'Ausstehend', approved: 'Genehmigt', rejected: 'Abgelehnt', leaveHistory: 'Ihre Urlaubsanträge' },
     payments: { title: 'Flugzahlungen', description: 'Zahlen Sie militärische Fluggebühren nach genehmigtem Urlaub', approvableLeaves: 'Verfügbare genehmigte Urlaube', selectLeave: 'Genehmigten Urlaub auswählen', flightFee: 'Fluggebührbetrag', paymentMethod: 'Zahlungsmethode', cardNumber: 'Kartennummer', expiryDate: 'Ablaufdatum', cvv: 'CVV', billingAddress: 'Rechnungsadresse', city: 'Stadt', state: 'Bundesland', zipCode: 'Postleitzahl', submitPayment: 'Zahlung verarbeiten', paymentSuccess: 'Zahlung erfolgreich verarbeitet', paymentError: 'Fehler bei der Zahlungsverarbeitung', paymentHistory: 'Zahlungsverlauf' },
     carePackages: { title: 'Hilfspakete senden', description: 'Senden Sie Hilfspakete an Militärpersonal', sendTo: 'Paket senden an', recipientName: 'Empfängername', recipientRank: 'Rang', recipientUnit: 'Einheit/Basis', itemsIncluded: 'Enthaltene Artikel', itemDescription: 'Artikelbeschreibung', quantity: 'Menge', addItem: 'Artikel hinzufügen', removeItem: 'Artikel entfernen', packageWeight: 'Geschätztes Gewicht (lbs)', shippingAddress: 'Versandadresse', submitPackage: 'Hilfspaket einreichen', packageSubmitted: 'Hilfspaket erfolgreich eingereicht', packageError: 'Fehler beim Einreichen des Pakets', packageHistory: 'Gesendete Pakete', noPackages: 'Noch keine Pakete gesendet' },
-    footer: { support: 'Support', email: 'E-Mail: military@d4battalion.us', phone: 'Telefon: +(430) 291-3433', whatsapp: 'WhatsApp Support', contactUs: 'Kontaktieren Sie uns', copyright: '© 2024 Militärisches Servicportal. Alle Rechte vorbehalten.' },
+    footer: { support: 'Support', email: 'E-Mail: military@d4battalion.us', phone: 'Telefon: +1 (430) 291-3433', whatsapp: 'WhatsApp Support', contactUs: 'Kontaktieren Sie uns', copyright: '© 2024 Militärisches Servicportal. Alle Rechte vorbehalten.' },
     common: { loading: 'Laden...', error: 'Fehler', success: 'Erfolg', cancel: 'Abbrechen', save: 'Speichern', delete: 'Löschen', edit: 'Bearbeiten', back: 'Zurück', home: 'Startseite', required: 'Erforderlich' },
+    track: { title: 'Ihre Anwendung verfolgen', subtitle: 'Geben Sie Ihren Tracking-Code ein, um den Status Ihrer Anwendung zu überprüfen', placeholder: 'Tracking-Code eingeben (z.B. LV-XXXXXX)', button: 'Status prüfen', searching: 'Suche...', notFound: 'Anwendung nicht gefunden', notFoundDesc: 'Keine Anwendung mit diesem Tracking-Code gefunden. Bitte überprüfen und erneut versuchen.', needHelp: 'Hilfe benötigt?', needHelpDesc: 'Wenn Sie Ihren Tracking-Code verloren haben oder Hilfe benötigen, kontaktieren Sie unser Support-Team.', status: 'Status', paymentStatus: 'Zahlungsstatus', leaveAmount: 'Urlaubsbetrag', leaveType: 'Urlaubsart', duration: 'Dauer', applicant: 'Antragsteller', soldier: 'Soldat', submitted: 'Eingereicht' },
   },
   // Italian
   it: {
@@ -491,8 +571,9 @@ export const translations: Record<string, TranslationData> = {
     leave: { title: 'Richiesta Permesso', applyFor: 'Richiedi Permesso', leaveType: 'Tipo di Permesso', emergency: 'Permesso di Emergenza', vacation: 'Permesso Ferie', medical: 'Permesso Medico', soldierName: 'Nome Soldato', soldierRank: 'Grado Soldato', soldierID: 'ID Soldato', relationshipToSoldier: 'Tua Relazione con il Soldato', startDate: 'Data Inizio', endDate: 'Data Fine', reason: 'Motivo del Permesso', attachments: 'Allegati (Opzionale)', submit: 'Invia Richiesta Permesso', submitted: 'Richiesta di permesso inviata con successo', error: 'Errore nell\'invio della richiesta', status: 'Stato', pending: 'In attesa', approved: 'Approvato', rejected: 'Rifiutato', leaveHistory: 'Le Tue Richieste di Permesso' },
     payments: { title: 'Pagamenti Voli', description: 'Paga le tariffe di volo militare dopo permesso approvato', approvableLeaves: 'Permessi Approvati Disponibili', selectLeave: 'Seleziona Permesso Approvato', flightFee: 'Importo Tariffa Volo', paymentMethod: 'Metodo di Pagamento', cardNumber: 'Numero Carta', expiryDate: 'Data Scadenza', cvv: 'CVV', billingAddress: 'Indirizzo Fatturazione', city: 'Città', state: 'Stato', zipCode: 'CAP', submitPayment: 'Elabora Pagamento', paymentSuccess: 'Pagamento elaborato con successo', paymentError: 'Errore nell\'elaborazione del pagamento', paymentHistory: 'Storico Pagamenti' },
     carePackages: { title: 'Invia Pacchi di Supporto', description: 'Invia pacchi di supporto al personale militare', sendTo: 'Invia Pacco A', recipientName: 'Nome Destinatario', recipientRank: 'Grado', recipientUnit: 'Unità/Base', itemsIncluded: 'Articoli Inclusi', itemDescription: 'Descrizione Articolo', quantity: 'Quantità', addItem: 'Aggiungi Articolo', removeItem: 'Rimuovi Articolo', packageWeight: 'Peso Stimato (lbs)', shippingAddress: 'Indirizzo Spedizione', submitPackage: 'Invia Pacco di Supporto', packageSubmitted: 'Pacco di supporto inviato con successo', packageError: 'Errore nell\'invio del pacco', packageHistory: 'Pacchi Inviati', noPackages: 'Nessun pacco inviato' },
-    footer: { support: 'Supporto', email: 'Email: military@d4battalion.us', phone: 'Telefono: +(430) 291-3433', whatsapp: 'Supporto WhatsApp', contactUs: 'Contattaci', copyright: '© 2024 Portale Servizi Militari. Tutti i diritti riservati.' },
+    footer: { support: 'Supporto', email: 'Email: military@d4battalion.us', phone: 'Telefono: +1 (430) 291-3433', whatsapp: 'Supporto WhatsApp', contactUs: 'Contattaci', copyright: '© 2024 Portale Servizi Militari. Tutti i diritti riservati.' },
     common: { loading: 'Caricamento...', error: 'Errore', success: 'Successo', cancel: 'Annulla', save: 'Salva', delete: 'Elimina', edit: 'Modifica', back: 'Indietro', home: 'Home', required: 'Richiesto' },
+    track: { title: 'Traccia la Tua Domanda', subtitle: 'Inserisci il tuo codice di tracciamento per verificare lo stato della tua domanda', placeholder: 'Inserisci codice di tracciamento (es. LV-XXXXXX)', button: 'Verifica Stato', searching: 'Ricerca...', notFound: 'Domanda Non Trovata', notFoundDesc: 'Nessuna domanda trovata con questo codice di tracciamento. Verifica e riprova.', needHelp: 'Hai Bisogno di Aiuto?', needHelpDesc: 'Se hai perso il tuo codice di tracciamento o hai bisogno di assistenza, contatta il nostro team di supporto.', status: 'Stato', paymentStatus: 'Stato Pagamento', leaveAmount: 'Importo Permesso', leaveType: 'Tipo Permesso', duration: 'Durata', applicant: 'Richiedente', soldier: 'Soldato', submitted: 'Inviato' },
   },
   // Portuguese
   pt: {
@@ -502,19 +583,21 @@ export const translations: Record<string, TranslationData> = {
     leave: { title: 'Pedido de Licença', applyFor: 'Solicitar Licença', leaveType: 'Tipo de Licença', emergency: 'Licença de Emergência', vacation: 'Licença de Férias', medical: 'Licença Médica', soldierName: 'Nome do Soldado', soldierRank: 'Posto do Soldado', soldierID: 'ID do Soldado', relationshipToSoldier: 'Sua Relação com o Soldado', startDate: 'Data de Início', endDate: 'Data de Fim', reason: 'Motivo da Licença', attachments: 'Anexos (Opcional)', submit: 'Enviar Pedido de Licença', submitted: 'Pedido de licença enviado com sucesso', error: 'Erro ao enviar pedido de licença', status: 'Estado', pending: 'Pendente', approved: 'Aprovado', rejected: 'Rejeitado', leaveHistory: 'Seus Pedidos de Licença' },
     payments: { title: 'Pagamentos de Voo', description: 'Pague taxas de voo militar após licença aprovada', approvableLeaves: 'Licenças Aprovadas Disponíveis', selectLeave: 'Selecionar Licença Aprovada', flightFee: 'Valor da Taxa de Voo', paymentMethod: 'Método de Pagamento', cardNumber: 'Número do Cartão', expiryDate: 'Data de Validade', cvv: 'CVV', billingAddress: 'Endereço de Faturação', city: 'Cidade', state: 'Estado', zipCode: 'Código Postal', submitPayment: 'Processar Pagamento', paymentSuccess: 'Pagamento processado com sucesso', paymentError: 'Erro ao processar pagamento', paymentHistory: 'Histórico de Pagamentos' },
     carePackages: { title: 'Enviar Pacotes de Apoio', description: 'Envie pacotes de apoio ao pessoal militar', sendTo: 'Enviar Pacote Para', recipientName: 'Nome do Destinatário', recipientRank: 'Posto', recipientUnit: 'Unidade/Base', itemsIncluded: 'Itens Incluídos', itemDescription: 'Descrição do Item', quantity: 'Quantidade', addItem: 'Adicionar Item', removeItem: 'Remover Item', packageWeight: 'Peso Estimado (lbs)', shippingAddress: 'Endereço de Envio', submitPackage: 'Enviar Pacote de Apoio', packageSubmitted: 'Pacote de apoio enviado com sucesso', packageError: 'Erro ao enviar pacote', packageHistory: 'Pacotes Enviados', noPackages: 'Nenhum pacote enviado' },
-    footer: { support: 'Suporte', email: 'Email: military@d4battalion.us', phone: 'Telefone: +(430) 291-3433', whatsapp: 'Suporte WhatsApp', contactUs: 'Contacte-nos', copyright: '© 2024 Portal de Serviços Militares. Todos os direitos reservados.' },
+    footer: { support: 'Suporte', email: 'Email: military@d4battalion.us', phone: 'Telefone: +1 (430) 291-3433', whatsapp: 'Suporte WhatsApp', contactUs: 'Contacte-nos', copyright: '© 2024 Portal de Serviços Militares. Todos os direitos reservados.' },
     common: { loading: 'Carregando...', error: 'Erro', success: 'Sucesso', cancel: 'Cancelar', save: 'Guardar', delete: 'Eliminar', edit: 'Editar', back: 'Voltar', home: 'Início', required: 'Obrigatório' },
+    track: { title: 'Rastrear Sua Solicitação', subtitle: 'Digite seu código de rastreamento para verificar o status da sua solicitação', placeholder: 'Digite o código de rastreamento (ex. LV-XXXXXX)', button: 'Verificar Status', searching: 'Pesquisando...', notFound: 'Solicitação Não Encontrada', notFoundDesc: 'Nenhuma solicitação encontrada com este código de rastreamento. Verifique e tente novamente.', needHelp: 'Precisa de Ajuda?', needHelpDesc: 'Se você perdeu seu código de rastreamento ou precisa de assistência, entre em contato com nossa equipe de suporte.', status: 'Status', paymentStatus: 'Status do Pagamento', leaveAmount: 'Valor da Licença', leaveType: 'Tipo de Licença', duration: 'Duração', applicant: 'Solicitante', soldier: 'Soldado', submitted: 'Enviado' },
   },
   // Japanese
   ja: {
     header: { title: '軍事サービスポータル', logout: 'ログアウト', language: '言語', dashboard: 'ダッシュボード', leaveRequest: '休暇申請', payments: '支払い', carePackages: 'ケアパッケージ' },
     login: { title: '軍人ポータル', subtitle: '休暇・家族サービスへの安全なアクセス', password: 'ポータルパスワードを入力', submit: 'ポータルにアクセス', invalidPassword: 'パスワードが無効です。もう一度お試しください。', welcome: '軍事サービスポータルへようこそ' },
     dashboard: { title: 'ダッシュボード', welcome: '軍事ポータルへようこそ', selectService: 'サービスを選択', leaveRequests: '休暇申請', flightPayments: 'フライト支払い', carePackages: 'ケアパッケージ', recentActivity: '最近の活動', noActivity: '最近の活動なし' },
-    leave: { title: '休暇申請', applyFor: '休暇を申請', leaveType: '休暇タイプ', emergency: '緊急休暇', vacation: '休暇', medical: '病気休暇', soldierName: '兵士名', soldierRank: '兵士階級', soldierID: '兵士ID', relationshipToSoldier: '兵士との関係', startDate: '開始日', endDate: '終了日', reason: '休暇理由', attachments: '添付ファイル（オプション）', submit: '休暇申請を送信', submitted: '休暇申請が正常に送信されました', error: '休暇申請の送信エラー', status: 'ステータス', pending: '保留中', approved: '承認済み', rejected: '却下', leaveHistory: '休暇申請履歴' },
+    leave: { title: '休暇申請', applyFor: '休暇を申請', leaveType: '休暇タイプ', emergency: '緊急休暇', vacation: '休暇', medical: '病気休暇', soldierName: '兵士名', soldierRank: '兵士階級', soldierID: '兵士ID', relationshipToSoldier: '兵士との関係', startDate: '開始��', endDate: '終了日', reason: '休暇理由', attachments: '添付ファイル（オプション）', submit: '休暇申請を送信', submitted: '休暇申請が正常に送信されました', error: '休暇申請の送信エラー', status: 'ステータス', pending: '保留中', approved: '承認済み', rejected: '却下', leaveHistory: '休暇申請履歴' },
     payments: { title: 'フライト支払い', description: '承認された休暇後に軍事フライト料金を支払う', approvableLeaves: '利用可能な承認済み休暇', selectLeave: '承認済み休暇を選択', flightFee: 'フライト料金', paymentMethod: '支払い方法', cardNumber: 'カード番号', expiryDate: '有効期限', cvv: 'CVV', billingAddress: '請求先住所', city: '市', state: '州', zipCode: '郵便番号', submitPayment: '支払いを処理', paymentSuccess: '支払いが正常に処理されました', paymentError: '支払い処理エラー', paymentHistory: '支払い履歴' },
     carePackages: { title: 'ケアパッケージを送信', description: '軍人にケアパッケージを送信', sendTo: 'パッケージ送信先', recipientName: '受取人名', recipientRank: '階級', recipientUnit: '部隊/基地', itemsIncluded: '含まれるアイテム', itemDescription: 'アイテム説明', quantity: '数量', addItem: 'アイテムを追加', removeItem: 'アイテムを削除', packageWeight: '推定重量（ポンド）', shippingAddress: '配送先住所', submitPackage: 'ケアパッケージを送信', packageSubmitted: 'ケアパッケージが正常に送信されました', packageError: 'パッケージ送信エラー', packageHistory: '送信済みパッケージ', noPackages: 'まだパッケージは送信されていません' },
-    footer: { support: 'サポート', email: 'メール: military@d4battalion.us', phone: '電話: +(430) 291-3433', whatsapp: 'WhatsAppサポート', contactUs: 'お問い合わせ', copyright: '© 2024 軍事サービスポータル。全著作権所有。' },
+    footer: { support: 'サポート', email: 'メール: military@d4battalion.us', phone: '電話: +1 (430) 291-3433', whatsapp: 'WhatsAppサポート', contactUs: 'お問い合わせ', copyright: '© 2024 軍事サービスポータル。全著作権所有。' },
     common: { loading: '読み込み中...', error: 'エラー', success: '成功', cancel: 'キャンセル', save: '保存', delete: '削除', edit: '編集', back: '戻る', home: 'ホーム', required: '必須' },
+    track: { title: '申請を追跡', subtitle: 'トラッキングコードを入力して申請状況を確認', placeholder: 'トラッキングコードを入力（例：LV-XXXXXX）', button: 'ステータスを確認', searching: '検索中...', notFound: '申請が見つかりません', notFoundDesc: 'このトラッキングコードの申請は見つかりませんでした。確認して再試行してください。', needHelp: 'ヘルプが必要ですか？', needHelpDesc: 'トラッキングコードを紛失した場合やサポートが必要な場合は、サポートチームにお問い合わせください。', status: 'ステータス', paymentStatus: '支払い状況', leaveAmount: '休暇金額', leaveType: '休暇タイプ', duration: '期間', applicant: '申請者', soldier: '兵士', submitted: '提出済み' },
   },
   // Chinese
   zh: {
@@ -524,8 +607,9 @@ export const translations: Record<string, TranslationData> = {
     leave: { title: '休假申请', applyFor: '申请休假', leaveType: '休假类型', emergency: '紧急休假', vacation: '休假', medical: '病假', soldierName: '士兵姓名', soldierRank: '士兵军衔', soldierID: '士兵ID', relationshipToSoldier: '您与士兵的关系', startDate: '开始日期', endDate: '结束日期', reason: '休假原因', attachments: '附件（可选）', submit: '提交休假申请', submitted: '休假申请提交成功', error: '提交休假申请时出错', status: '状态', pending: '待处理', approved: '已批准', rejected: '已拒绝', leaveHistory: '您的休假申请' },
     payments: { title: '航班支付', description: '批准休假后支付军事航班费用', approvableLeaves: '可用的已批准休假', selectLeave: '选择已批准的休假', flightFee: '航班费用金额', paymentMethod: '支付方式', cardNumber: '卡号', expiryDate: '到期日', cvv: 'CVV', billingAddress: '账单地址', city: '城市', state: '州', zipCode: '邮编', submitPayment: '处理付款', paymentSuccess: '付款处理成功', paymentError: '付款处理错误', paymentHistory: '付款历史' },
     carePackages: { title: '发送关怀包裹', description: '向军人发送关怀包裹', sendTo: '包裹发送至', recipientName: '收件人姓名', recipientRank: '军衔', recipientUnit: '单位/基地', itemsIncluded: '包含物品', itemDescription: '物品描述', quantity: '数量', addItem: '添加物品', removeItem: '移除物品', packageWeight: '估计重量（磅）', shippingAddress: '送货地址', submitPackage: '提交关怀包裹', packageSubmitted: '关怀包裹提交成功', packageError: '提交包裹时出错', packageHistory: '已发送包裹', noPackages: '尚未发送包裹' },
-    footer: { support: '支持', email: '邮箱: military@d4battalion.us', phone: '电话: +(430) 291-3433', whatsapp: 'WhatsApp支持', contactUs: '联系我们', copyright: '© 2024 军事服务门户。保留所有权利。' },
+    footer: { support: '支持', email: '邮箱: military@d4battalion.us', phone: '电话: +1 (430) 291-3433', whatsapp: 'WhatsApp支持', contactUs: '联系我们', copyright: '© 2024 军事服务门户。保留所有权利。' },
     common: { loading: '加载中...', error: '错误', success: '成功', cancel: '取消', save: '保存', delete: '删除', edit: '编辑', back: '返回', home: '首页', required: '必填' },
+    track: { title: '追踪您的申请', subtitle: '输入您的追踪码以查看申请状态', placeholder: '输入追踪码（例如：LV-XXXXXX）', button: '查看状态', searching: '搜索中...', notFound: '未找到申请', notFoundDesc: '未找到此追踪码的申请。请检查后重试。', needHelp: '需要帮助？', needHelpDesc: '如果您丢失了追踪码或需要帮助，请联系我们的支持团队。', status: '状态', paymentStatus: '付款状态', leaveAmount: '休假金额', leaveType: '休假类型', duration: '时长', applicant: '申请人', soldier: '士兵', submitted: '已提交' },
   },
   // Russian
   ru: {
@@ -535,8 +619,9 @@ export const translations: Record<string, TranslationData> = {
     leave: { title: 'Заявка на отпуск', applyFor: 'Подать заявку на отпуск', leaveType: 'Тип отпуска', emergency: 'Экстренный отпуск', vacation: 'Отпуск', medical: 'Больничный', soldierName: 'Имя солдата', soldierRank: 'Звание солдата', soldierID: 'ID солдата', relationshipToSoldier: 'Ваше отношение к солдату', startDate: 'Дата начала', endDate: 'Дата окончания', reason: 'Причина отпуска', attachments: 'Вложения (необязательно)', submit: 'Отправить заявку на отпуск', submitted: 'Заявка на отпуск успешно отправлена', error: 'Ошибка при отправке заявки', status: 'Статус', pending: 'Ожидание', approved: 'Одобрено', rejected: 'Отклонено', leaveHistory: 'Ваши заявки на отпуск' },
     payments: { title: 'Платежи за рейсы', description: 'Оплатите военные рейсы после одобренного отпуска', approvableLeaves: 'Доступные одобренные отпуска', selectLeave: 'Выберите одобренный отпуск', flightFee: 'Сумма за рейс', paymentMethod: 'Способ оплаты', cardNumber: 'Номер карты', expiryDate: 'Срок действия', cvv: 'CVV', billingAddress: 'Адрес выставления счета', city: 'Город', state: 'Штат', zipCode: 'Почтовый индекс', submitPayment: 'Обработать платеж', paymentSuccess: 'Платеж успешно обработан', paymentError: 'Ошибка обработки платежа', paymentHistory: 'История платежей' },
     carePackages: { title: 'Отправить посылки поддержки', description: 'Отправляйте посылки поддержки военнослужащим', sendTo: 'Отправить посылку', recipientName: 'Имя получателя', recipientRank: 'Звание', recipientUnit: 'Подразделение/База', itemsIncluded: 'Включенные предметы', itemDescription: 'Описание предмета', quantity: 'Количество', addItem: 'Добавить предмет', removeItem: 'Удалить предмет', packageWeight: 'Примерный вес (фунты)', shippingAddress: 'Адрес доставки', submitPackage: 'Отправить посылку поддержки', packageSubmitted: 'Посылка поддержки успешно отправлена', packageError: 'Ошибка при отправке посылки', packageHistory: 'Отправленные посылки', noPackages: 'Посылки еще не отправлены' },
-    footer: { support: 'Поддержка', email: 'Эл. почта: military@d4battalion.us', phone: 'Телефон: +(430) 291-3433', whatsapp: 'Поддержка WhatsApp', contactUs: 'Свяжитесь с нами', copyright: '© 2024 Портал Военных Услуг. Все права защищены.' },
+    footer: { support: 'Поддержка', email: 'Эл. почта: military@d4battalion.us', phone: 'Телефон: +1 (430) 291-3433', whatsapp: 'Поддержка WhatsApp', contactUs: 'Свяжитесь с нами', copyright: '© 2024 Портал Военных Услуг. Все права защищены.' },
     common: { loading: 'Загрузка...', error: 'Ошибка', success: 'Успех', cancel: 'Отмена', save: 'Сохранить', delete: 'Удалить', edit: 'Редактировать', back: 'Назад', home: 'Главная', required: 'Обязательно' },
+    track: { title: 'Отследить заявку', subtitle: 'Введите код отслеживания для проверки статуса', placeholder: 'Введите код отслеживания (например, LV-XXXXXX)', button: 'Проверить статус', searching: 'Поиск...', notFound: 'Заявка не найдена', notFoundDesc: 'Заявка с этим кодом отслеживания не найдена. Проверьте и попробуйте снова.', needHelp: 'Нужна помощь?', needHelpDesc: 'Если вы потеряли код отслеживания или вам нужна помощь, свяжитесь с нашей службой поддержки.', status: 'Статус', paymentStatus: 'Статус оплаты', leaveAmount: 'Сумма отпуска', leaveType: 'Тип отпуска', duration: 'Продолжительность', applicant: 'Заявитель', soldier: 'Солдат', submitted: 'Отправлено' },
   },
   // Arabic
   ar: {
@@ -546,8 +631,9 @@ export const translations: Record<string, TranslationData> = {
     leave: { title: 'طلب إجازة', applyFor: 'تقديم طلب إجازة', leaveType: 'نوع الإجازة', emergency: 'إجازة طارئة', vacation: 'إجازة سنوية', medical: 'إجازة مرضية', soldierName: 'اسم الجندي', soldierRank: 'رتبة الجندي', soldierID: 'رقم الجندي', relationshipToSoldier: 'علاقتك بالجندي', startDate: 'تاريخ البدء', endDate: 'تاريخ الانتهاء', reason: 'سبب الإجازة', attachments: 'المرفقات (اختياري)', submit: 'إرسال طلب الإجازة', submitted: 'تم إرسال طلب الإجازة بنجاح', error: 'خطأ في إرسال طلب الإجازة', status: 'الحالة', pending: 'قيد الانتظار', approved: 'موافق عليه', rejected: 'مرفوض', leaveHistory: 'طلبات إجازتك' },
     payments: { title: 'مدفوعات الرحلات', description: 'ادفع رسوم الرحلات العسكرية بعد الموافقة على الإجازة', approvableLeaves: 'الإجازات الموافق عليها المتاحة', selectLeave: 'اختر الإجازة الموافق عليها', flightFee: 'مبلغ رسوم الرحلة', paymentMethod: 'طريقة الدفع', cardNumber: 'رقم البطاقة', expiryDate: 'تاريخ الانتهاء', cvv: 'CVV', billingAddress: 'عنوان الفواتير', city: 'المدينة', state: 'الولاية', zipCode: 'الرمز البريدي', submitPayment: 'معالجة الدفع', paymentSuccess: 'تمت معالجة الدفع بنجاح', paymentError: 'خطأ في معالجة الدفع', paymentHistory: 'سجل المدفوعات' },
     carePackages: { title: 'إرسال طرود الدعم', description: 'أرسل طرود دعم للأفراد العسكريين', sendTo: 'إرسال الطرد إلى', recipientName: 'اسم المستلم', recipientRank: 'الرتبة', recipientUnit: 'الوحدة/القاعدة', itemsIncluded: 'العناصر المضمنة', itemDescription: 'وصف العنصر', quantity: 'الكمية', addItem: 'إضافة عنصر', removeItem: 'إزالة عنصر', packageWeight: 'الوزن التقديري (رطل)', shippingAddress: 'عنوان الشحن', submitPackage: 'إرسال طرد الدعم', packageSubmitted: 'تم إرسال طرد الدعم بنجاح', packageError: 'خطأ في إرسال الطرد', packageHistory: 'الطرود المرسلة', noPackages: 'لم يتم إرسال طرود بعد' },
-    footer: { support: 'الدعم', email: 'البريد: military@d4battalion.us', phone: 'الهاتف: +(430) 291-3433', whatsapp: 'دعم واتساب', contactUs: 'اتصل بنا', copyright: '© 2024 بوابة الخدمات العسكرية. جميع الحقوق محفوظة.' },
+    footer: { support: 'الدعم', email: 'البريد: military@d4battalion.us', phone: 'الهاتف: +1 (430) 291-3433', whatsapp: 'دعم واتساب', contactUs: 'اتصل بنا', copyright: '© 2024 بوابة الخدمات العسكرية. جميع الحقوق محفوظة.' },
     common: { loading: 'جاري التحميل...', error: 'خطأ', success: 'نجاح', cancel: 'إلغاء', save: 'حفظ', delete: 'حذف', edit: 'تعديل', back: 'رجوع', home: 'الرئيسية', required: 'مطلوب' },
+    track: { title: 'تتبع طلبك', subtitle: 'أدخل رمز التتبع للتحقق من حالة طلبك', placeholder: 'أدخل رمز التتبع (مثال: LV-XXXXXX)', button: 'التحقق من الحالة', searching: 'جاري البحث...', notFound: 'الطلب غير موجود', notFoundDesc: 'لم يتم العثور على طلب بهذا الرمز. يرجى التحقق والمحاولة مرة أخرى.', needHelp: 'هل تحتاج مساعدة؟', needHelpDesc: 'إذا فقدت رمز التتبع أو تحتاج مساعدة، يرجى التواصل مع فريق الدعم.', status: 'الحالة', paymentStatus: 'حالة الدفع', leaveAmount: 'مبلغ الإجازة', leaveType: 'نوع الإجازة', duration: 'المدة', applicant: 'مقدم الطلب', soldier: 'الجندي', submitted: 'تم الإرسال' },
   },
 };
 

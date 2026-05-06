@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
 
   if (!isAuthenticated) return null;
 
-  const whatsappUrl = `https://wa.me/4302913433?text=Hello,%20I%20need%20military%20support%20services`;
+  const whatsappUrl = `https://wa.me/14302913433?text=Hello,%20I%20need%20military%20support%20services`;
 
   return (
     <a

@@ -400,8 +400,8 @@ export default function TrackLeavePage() {
                   <div className="bg-accent/10 border border-accent p-4 rounded-lg mb-4">
                     <p className="font-semibold text-foreground mb-2">Contact Admin for Bank Details:</p>
                     <p className="text-sm text-muted-foreground">Email: military@d4battalion.us</p>
-                    <p className="text-sm text-muted-foreground">Phone: +(430) 291-3433</p>
-                    <p className="text-sm text-muted-foreground">WhatsApp: +(430) 291-3433</p>
+                    <p className="text-sm text-muted-foreground">Phone: +1 (430) 291-3433</p>
+                    <p className="text-sm text-muted-foreground">WhatsApp: +1 (430) 291-3433</p>
                   </div>
 
                   {/* Payment Confirmation Buttons */}
@@ -550,11 +550,11 @@ export default function TrackLeavePage() {
               <a href="mailto:military@d4battalion.us" className="text-accent hover:underline">
                 military@d4battalion.us
               </a>
-              <a href="tel:+4302913433" className="text-accent hover:underline">
-                +(430) 291-3433
+              <a href="tel:+14302913433" className="text-accent hover:underline">
+                +1 (430) 291-3433
               </a>
               <a
-                href="https://wa.me/4302913433"
+                href="https://wa.me/14302913433"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-500 hover:underline"

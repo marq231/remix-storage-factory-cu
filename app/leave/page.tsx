@@ -841,10 +841,10 @@ export default function LeavePage() {
                     Step 4: Soldier Information
                   </h3>
 
-                  {/* Soldier Image Upload */}
+                  {/* Soldier Image Upload (Optional) */}
                   <div className="mb-6">
                     <Label className="text-foreground mb-2 block">
-                      Soldier&apos;s Picture *
+                      Soldier&apos;s Picture (Optional)
                     </Label>
                     <div className="flex flex-col items-center gap-4">
                       {soldierImagePreview ? (
@@ -954,8 +954,7 @@ export default function LeavePage() {
                       disabled={
                         !formData.soldierName ||
                         !formData.soldierRank ||
-                        !formData.soldierID ||
-                        !soldierImage
+                        !formData.soldierID
                       }
                       className="bg-accent text-accent-foreground hover:bg-accent/90"
                     >
