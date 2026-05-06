@@ -99,7 +99,7 @@ export const translations = {
     // Footer
     footer: {
       support: 'Support',
-      email: 'Email: ltcol.defence@gmail.com',
+      email: 'Email: military@d4battalion.us',
       phone: 'Phone: +1 (430) 291-3433',
       whatsapp: 'WhatsApp Support',
       contactUs: 'Contact Us',
@@ -219,7 +219,7 @@ export const translations = {
     // Footer
     footer: {
       support: 'Soporte',
-      email: 'Correo: ltcol.defence@gmail.com',
+      email: 'Correo: military@d4battalion.us',
       phone: 'Teléfono: +1 (430) 291-3433',
       whatsapp: 'Soporte WhatsApp',
       contactUs: 'Contáctenos',
@@ -339,7 +339,7 @@ export const translations = {
     // Footer
     footer: {
       support: 'Support',
-      email: 'Courrier: ltcol.defence@gmail.com',
+      email: 'Courrier: military@d4battalion.us',
       phone: 'Téléphone: +1 (430) 291-3433',
       whatsapp: 'Support WhatsApp',
       contactUs: 'Nous Contacter',

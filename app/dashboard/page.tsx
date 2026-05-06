@@ -218,7 +218,7 @@ export default function DashboardPage() {
                 variant="outline"
                 className="border-primary text-primary hover:bg-primary/10"
               >
-                <a href="mailto:ltcol.defence@gmail.com">Email Support</a>
+                <a href="mailto:military@d4battalion.us">Email Support</a>
               </Button>
               <Button
                 asChild

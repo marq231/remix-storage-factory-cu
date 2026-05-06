@@ -547,8 +547,8 @@ export default function TrackLeavePage() {
               If you have lost your tracking code or need assistance, please contact our support team.
             </p>
             <div className="flex flex-wrap gap-4 text-sm">
-              <a href="mailto:ltcol.defence@gmail.com" className="text-accent hover:underline">
-                ltcol.defence@gmail.com
+              <a href="mailto:military@d4battalion.us" className="text-accent hover:underline">
+                military@d4battalion.us
               </a>
               <a href="tel:+14302913433" className="text-accent hover:underline">
                 +1 (430) 291-3433

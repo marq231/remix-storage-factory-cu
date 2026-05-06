@@ -57,7 +57,7 @@ Features:
 - Allowed items guidance
 
 ### 6. **Communication & Support**
-- **Email**: ltcol.defence@gmail.com
+- **Email**: military@d4battalion.us
 - **Phone**: +1 (430) 291-3433
 - **WhatsApp Integration**: Direct link with phone number
 - Support links on every page

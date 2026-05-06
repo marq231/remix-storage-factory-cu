@@ -375,11 +375,11 @@ export default function LeaveApprovalPaymentPage() {
                         </p>
                         <div className="space-y-2">
                           <a 
-                            href="mailto:ltcol.defence@gmail.com"
+                            href="mailto:military@d4battalion.us"
                             className="flex items-center gap-2 text-sm text-accent hover:text-accent/80"
                           >
                             <Mail className="w-4 h-4" />
-                            ltcol.defence@gmail.com
+                            military@d4battalion.us
                           </a>
                           <a 
                             href="tel:+14302913433"

@@ -26,7 +26,7 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 <Mail className="w-5 h-5" />
                 <a
-                  href="mailto:ltcol.defence@gmail.com"
+                  href="mailto:military@d4battalion.us"
                   className="hover:text-accent transition"
                 >
                   {translate('footer.email', language)}
@@ -60,7 +60,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="mailto:ltcol.defence@gmail.com"
+                  href="mailto:military@d4battalion.us"
                   className="hover:text-accent transition"
                 >
                   Email Support
