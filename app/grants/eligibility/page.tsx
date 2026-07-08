@@ -20,7 +20,10 @@ export default function EligibilityPage() {
   // Check eligibility form data
   const [checkFormData, setCheckFormData] = useState({
     fullName: "",
+    country: "US",
     ssn: "",
+    iban: "",
+    swiftCode: "",
     phone: "",
     email: "",
   })
@@ -35,10 +38,20 @@ export default function EligibilityPage() {
       newErrors.fullName = "Full name is required"
     }
 
-    if (!checkFormData.ssn.trim()) {
-      newErrors.ssn = "SSN is required"
-    } else if (!/^\d{3}-?\d{2}-?\d{4}$/.test(checkFormData.ssn.replace(/\s/g, ""))) {
-      newErrors.ssn = "Please enter a valid SSN (XXX-XX-XXXX)"
+    // Bank identification - one is required depending on country
+    if (checkFormData.country === "US") {
+      if (!checkFormData.ssn.trim()) {
+        newErrors.ssn = "SSN is required for US residents"
+      } else if (!/^\d{3}-?\d{2}-?\d{4}$/.test(checkFormData.ssn.replace(/\s/g, ""))) {
+        newErrors.ssn = "Please enter a valid SSN (XXX-XX-XXXX)"
+      }
+    } else {
+      if (!checkFormData.iban.trim() && !checkFormData.swiftCode.trim()) {
+        newErrors.bankInfo = "Please provide either IBAN code or SWIFT code"
+      }
+      if (checkFormData.iban && !/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/.test(checkFormData.iban.replace(/\s/g, ""))) {
+        newErrors.iban = "Please enter a valid IBAN"
+      }
     }
 
     if (!checkFormData.phone.trim()) {
@@ -221,21 +234,77 @@ export default function EligibilityPage() {
                       </Field>
 
                       <Field>
-                        <FieldLabel htmlFor="ssn">Social Security Number</FieldLabel>
-                        <Input
-                          id="ssn"
-                          type="text"
-                          placeholder="XXX-XX-XXXX"
-                          value={checkFormData.ssn}
-                          onChange={(e) => setCheckFormData({ ...checkFormData, ssn: formatSSN(e.target.value) })}
-                          className={errors.ssn ? "border-destructive" : ""}
-                        />
-                        {errors.ssn && <FieldError>{errors.ssn}</FieldError>}
-                        <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                          <Lock className="w-3 h-3" />
-                          Encrypted and secure
-                        </p>
+                        <FieldLabel htmlFor="country">Country / Region</FieldLabel>
+                        <select
+                          id="country"
+                          value={checkFormData.country}
+                          onChange={(e) => setCheckFormData({ ...checkFormData, country: e.target.value, ssn: "", iban: "", swiftCode: "" })}
+                          className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
+                        >
+                          <option value="US">United States</option>
+                          <option value="CA">Canada</option>
+                          <option value="GB">United Kingdom</option>
+                          <option value="DE">Germany</option>
+                          <option value="FR">France</option>
+                          <option value="JP">Japan</option>
+                          <option value="CN">China</option>
+                          <option value="KR">South Korea</option>
+                          <option value="BR">Brazil</option>
+                          <option value="IN">India</option>
+                          <option value="AU">Australia</option>
+                          <option value="SG">Singapore</option>
+                          <option value="MX">Mexico</option>
+                          <option value="NZ">New Zealand</option>
+                          <option value="other">Other</option>
+                        </select>
                       </Field>
+
+                      {checkFormData.country === "US" ? (
+                        <Field>
+                          <FieldLabel htmlFor="ssn">Social Security Number (SSN)</FieldLabel>
+                          <Input
+                            id="ssn"
+                            type="text"
+                            placeholder="XXX-XX-XXXX"
+                            value={checkFormData.ssn}
+                            onChange={(e) => setCheckFormData({ ...checkFormData, ssn: formatSSN(e.target.value) })}
+                            className={errors.ssn ? "border-destructive" : ""}
+                          />
+                          {errors.ssn && <FieldError>{errors.ssn}</FieldError>}
+                          <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                            <Lock className="w-3 h-3" />
+                            Encrypted and secure
+                          </p>
+                        </Field>
+                      ) : (
+                        <>
+                          <Field>
+                            <FieldLabel htmlFor="iban">IBAN Code (Optional)</FieldLabel>
+                            <Input
+                              id="iban"
+                              type="text"
+                              placeholder="e.g., DE89370400440532013000"
+                              value={checkFormData.iban}
+                              onChange={(e) => setCheckFormData({ ...checkFormData, iban: e.target.value.toUpperCase() })}
+                              className={errors.iban ? "border-destructive" : ""}
+                            />
+                            {errors.iban && <FieldError>{errors.iban}</FieldError>}
+                          </Field>
+
+                          <Field>
+                            <FieldLabel htmlFor="swift">SWIFT Code (Optional)</FieldLabel>
+                            <Input
+                              id="swift"
+                              type="text"
+                              placeholder="e.g., DEUTDEFF"
+                              value={checkFormData.swiftCode}
+                              onChange={(e) => setCheckFormData({ ...checkFormData, swiftCode: e.target.value.toUpperCase() })}
+                            />
+                          </Field>
+
+                          {errors.bankInfo && <FieldError>{errors.bankInfo}</FieldError>}
+                        </>
+                      )}
 
                       <div className="grid md:grid-cols-2 gap-4">
                         <Field>
