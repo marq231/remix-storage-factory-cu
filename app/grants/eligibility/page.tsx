@@ -257,35 +257,37 @@ export default function EligibilityPage() {
                         const countryInfo = getCountryIdentification(checkFormData.country)
                         return (
                           <>
-                            <Field>
-                              <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
-                              <Input
-                                id="idNumber"
-                                type="text"
-                                placeholder={countryInfo?.idPlaceholder || ""}
-                                value={checkFormData.idNumber}
-                                onChange={(e) => setCheckFormData({ ...checkFormData, idNumber: e.target.value.toUpperCase() })}
-                                className={errors.idNumber ? "border-destructive" : ""}
-                              />
-                              {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
-                              <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                                <Lock className="w-3 h-3" />
-                                Encrypted and secure
-                              </p>
-                            </Field>
-
-                            {countryInfo?.bankField1 && (
+                            <div className="grid md:grid-cols-2 gap-4">
                               <Field>
-                                <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                                <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
                                 <Input
-                                  id="bankField1"
+                                  id="idNumber"
                                   type="text"
-                                  placeholder={countryInfo.bankField1.placeholder}
-                                  value={checkFormData.bankField1}
-                                  onChange={(e) => setCheckFormData({ ...checkFormData, bankField1: e.target.value.toUpperCase() })}
+                                  placeholder={countryInfo?.idPlaceholder || ""}
+                                  value={checkFormData.idNumber}
+                                  onChange={(e) => setCheckFormData({ ...checkFormData, idNumber: e.target.value.toUpperCase() })}
+                                  className={errors.idNumber ? "border-destructive" : ""}
                                 />
+                                {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
+                                <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                                  <Lock className="w-3 h-3" />
+                                  Encrypted and secure
+                                </p>
                               </Field>
-                            )}
+
+                              {countryInfo?.bankField1 && (
+                                <Field>
+                                  <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                                  <Input
+                                    id="bankField1"
+                                    type="text"
+                                    placeholder={countryInfo.bankField1.placeholder}
+                                    value={checkFormData.bankField1}
+                                    onChange={(e) => setCheckFormData({ ...checkFormData, bankField1: e.target.value.toUpperCase() })}
+                                  />
+                                </Field>
+                              )}
+                            </div>
 
                             {countryInfo?.bankField2 && (
                               <Field>

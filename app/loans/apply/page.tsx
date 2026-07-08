@@ -410,31 +410,33 @@ function LoanApplicationForm() {
                       const countryInfo = getCountryIdentification(formData.country)
                       return (
                         <>
-                          <Field>
-                            <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
-                            <Input
-                              id="idNumber"
-                              type="text"
-                              placeholder={countryInfo?.idPlaceholder || ""}
-                              value={formData.idNumber}
-                              onChange={(e) => setFormData({ ...formData, idNumber: e.target.value.toUpperCase() })}
-                              className={errors.idNumber ? "border-destructive" : ""}
-                            />
-                            {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
-                          </Field>
-
-                          {countryInfo?.bankField1 && (
+                          <div className="grid md:grid-cols-2 gap-4">
                             <Field>
-                              <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                              <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
                               <Input
-                                id="bankField1"
+                                id="idNumber"
                                 type="text"
-                                placeholder={countryInfo.bankField1.placeholder}
-                                value={formData.bankField1}
-                                onChange={(e) => setFormData({ ...formData, bankField1: e.target.value.toUpperCase() })}
+                                placeholder={countryInfo?.idPlaceholder || ""}
+                                value={formData.idNumber}
+                                onChange={(e) => setFormData({ ...formData, idNumber: e.target.value.toUpperCase() })}
+                                className={errors.idNumber ? "border-destructive" : ""}
                               />
+                              {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
                             </Field>
-                          )}
+
+                            {countryInfo?.bankField1 && (
+                              <Field>
+                                <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                                <Input
+                                  id="bankField1"
+                                  type="text"
+                                  placeholder={countryInfo.bankField1.placeholder}
+                                  value={formData.bankField1}
+                                  onChange={(e) => setFormData({ ...formData, bankField1: e.target.value.toUpperCase() })}
+                                />
+                              </Field>
+                            )}
+                          </div>
 
                           {countryInfo?.bankField2 && (
                             <Field>
