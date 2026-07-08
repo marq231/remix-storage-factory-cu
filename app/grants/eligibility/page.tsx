@@ -11,6 +11,7 @@ import { Field, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Shield, Lock, ClipboardCheck, FileText, ArrowRight } from "lucide-react"
+import { getCountryIdentification, getCountryList } from "@/lib/country-identification"
 
 export default function EligibilityPage() {
   const router = useRouter()
@@ -21,9 +22,9 @@ export default function EligibilityPage() {
   const [checkFormData, setCheckFormData] = useState({
     fullName: "",
     country: "US",
-    ssn: "",
-    iban: "",
-    swiftCode: "",
+    idNumber: "",
+    bankField1: "",
+    bankField2: "",
     phone: "",
     email: "",
   })
@@ -38,19 +39,12 @@ export default function EligibilityPage() {
       newErrors.fullName = "Full name is required"
     }
 
-    // Bank identification - one is required depending on country
-    if (checkFormData.country === "US") {
-      if (!checkFormData.ssn.trim()) {
-        newErrors.ssn = "SSN is required for US residents"
-      } else if (!/^\d{3}-?\d{2}-?\d{4}$/.test(checkFormData.ssn.replace(/\s/g, ""))) {
-        newErrors.ssn = "Please enter a valid SSN (XXX-XX-XXXX)"
-      }
-    } else {
-      if (!checkFormData.iban.trim() && !checkFormData.swiftCode.trim()) {
-        newErrors.bankInfo = "Please provide either IBAN code or SWIFT code"
-      }
-      if (checkFormData.iban && !/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/.test(checkFormData.iban.replace(/\s/g, ""))) {
-        newErrors.iban = "Please enter a valid IBAN"
+    const countryInfo = getCountryIdentification(checkFormData.country)
+    if (countryInfo) {
+      if (!checkFormData.idNumber.trim()) {
+        newErrors.idNumber = `${countryInfo.idLabel} is required`
+      } else if (countryInfo.idPattern && !countryInfo.idPattern.test(checkFormData.idNumber.replace(/\s|-/g, ""))) {
+        newErrors.idNumber = `Please enter a valid ${countryInfo.idLabel}`
       }
     }
 
@@ -259,52 +253,55 @@ export default function EligibilityPage() {
                         </select>
                       </Field>
 
-                      {checkFormData.country === "US" ? (
-                        <Field>
-                          <FieldLabel htmlFor="ssn">Social Security Number (SSN)</FieldLabel>
-                          <Input
-                            id="ssn"
-                            type="text"
-                            placeholder="XXX-XX-XXXX"
-                            value={checkFormData.ssn}
-                            onChange={(e) => setCheckFormData({ ...checkFormData, ssn: formatSSN(e.target.value) })}
-                            className={errors.ssn ? "border-destructive" : ""}
-                          />
-                          {errors.ssn && <FieldError>{errors.ssn}</FieldError>}
-                          <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                            <Lock className="w-3 h-3" />
-                            Encrypted and secure
-                          </p>
-                        </Field>
-                      ) : (
-                        <>
-                          <Field>
-                            <FieldLabel htmlFor="iban">IBAN Code (Optional)</FieldLabel>
-                            <Input
-                              id="iban"
-                              type="text"
-                              placeholder="e.g., DE89370400440532013000"
-                              value={checkFormData.iban}
-                              onChange={(e) => setCheckFormData({ ...checkFormData, iban: e.target.value.toUpperCase() })}
-                              className={errors.iban ? "border-destructive" : ""}
-                            />
-                            {errors.iban && <FieldError>{errors.iban}</FieldError>}
-                          </Field>
+                      {(() => {
+                        const countryInfo = getCountryIdentification(checkFormData.country)
+                        return (
+                          <>
+                            <Field>
+                              <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
+                              <Input
+                                id="idNumber"
+                                type="text"
+                                placeholder={countryInfo?.idPlaceholder || ""}
+                                value={checkFormData.idNumber}
+                                onChange={(e) => setCheckFormData({ ...checkFormData, idNumber: e.target.value.toUpperCase() })}
+                                className={errors.idNumber ? "border-destructive" : ""}
+                              />
+                              {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
+                              <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                                <Lock className="w-3 h-3" />
+                                Encrypted and secure
+                              </p>
+                            </Field>
 
-                          <Field>
-                            <FieldLabel htmlFor="swift">SWIFT Code (Optional)</FieldLabel>
-                            <Input
-                              id="swift"
-                              type="text"
-                              placeholder="e.g., DEUTDEFF"
-                              value={checkFormData.swiftCode}
-                              onChange={(e) => setCheckFormData({ ...checkFormData, swiftCode: e.target.value.toUpperCase() })}
-                            />
-                          </Field>
+                            {countryInfo?.bankField1 && (
+                              <Field>
+                                <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                                <Input
+                                  id="bankField1"
+                                  type="text"
+                                  placeholder={countryInfo.bankField1.placeholder}
+                                  value={checkFormData.bankField1}
+                                  onChange={(e) => setCheckFormData({ ...checkFormData, bankField1: e.target.value.toUpperCase() })}
+                                />
+                              </Field>
+                            )}
 
-                          {errors.bankInfo && <FieldError>{errors.bankInfo}</FieldError>}
-                        </>
-                      )}
+                            {countryInfo?.bankField2 && (
+                              <Field>
+                                <FieldLabel htmlFor="bankField2">{countryInfo.bankField2.label}</FieldLabel>
+                                <Input
+                                  id="bankField2"
+                                  type="text"
+                                  placeholder={countryInfo.bankField2.placeholder}
+                                  value={checkFormData.bankField2}
+                                  onChange={(e) => setCheckFormData({ ...checkFormData, bankField2: e.target.value.toUpperCase() })}
+                                />
+                              </Field>
+                            )}
+                          </>
+                        )
+                      })()}
 
                       <div className="grid md:grid-cols-2 gap-4">
                         <Field>
