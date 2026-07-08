@@ -38,6 +38,9 @@ interface GrantEligibility {
   ssn: string
   phone: string
   email: string
+  country?: string
+  iban?: string
+  swift_code?: string
   status: "pending" | "approved" | "rejected"
   created_at: string
 }
@@ -475,9 +478,25 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as GrantEligibility).full_name}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">SSN</p>
-                  <p className="font-mono">{(selectedItem as GrantEligibility).ssn}</p>
+                  <p className="text-sm text-muted-foreground">Country</p>
+                  <p className="font-medium">{(selectedItem as GrantEligibility).country || "US"}</p>
                 </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">{(selectedItem as GrantEligibility).country === "US" ? "SSN" : "SSN / Identifier"}</p>
+                  <p className="font-mono text-sm">{(selectedItem as GrantEligibility).ssn || "N/A"}</p>
+                </div>
+                {(selectedItem as GrantEligibility).iban && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">IBAN Code</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).iban}</p>
+                  </div>
+                )}
+                {(selectedItem as GrantEligibility).swift_code && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">SWIFT Code</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).swift_code}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
                   <p>{(selectedItem as GrantEligibility).phone}</p>

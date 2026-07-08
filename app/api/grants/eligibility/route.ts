@@ -10,12 +10,27 @@ function generateApplicationCode(): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { fullName, ssn, phone, email } = body
+    const { fullName, country, ssn, iban, swiftCode, phone, email } = body
 
     // Validate required fields
-    if (!fullName || !ssn || !phone || !email) {
+    if (!fullName || !phone || !email || !country) {
       return NextResponse.json(
         { error: "All fields are required" },
+        { status: 400 }
+      )
+    }
+
+    // Validate country-specific identifiers
+    if (country === "US" && !ssn) {
+      return NextResponse.json(
+        { error: "SSN is required for US residents" },
+        { status: 400 }
+      )
+    }
+
+    if (country !== "US" && !iban && !swiftCode) {
+      return NextResponse.json(
+        { error: "IBAN or SWIFT code is required for international applicants" },
         { status: 400 }
       )
     }
@@ -39,7 +54,7 @@ export async function POST(request: NextRequest) {
       .insert({
         application_code: applicationCode,
         full_name: fullName,
-        ssn: ssn,
+        ssn: country === "US" ? ssn : "",
         phone: phone,
         email: email,
         status: "pending",
