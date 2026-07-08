@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
+import { LanguageSelector } from "@/components/language-selector"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -32,6 +33,7 @@ export function Header() {
         </div>
 
         <div className="hidden lg:flex lg:items-center lg:gap-4">
+          <LanguageSelector />
           <Button asChild variant="outline">
             <Link href="/grants/eligibility">Check Eligibility</Link>
           </Button>
