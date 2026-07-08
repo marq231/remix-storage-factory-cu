@@ -53,6 +53,8 @@ interface GrantApplication {
   state: string
   city: string
   country: string
+  iban?: string
+  swift_code?: string
   date_of_birth: string
   phone: string
   email: string
@@ -76,6 +78,8 @@ interface LoanApplication {
   state: string
   city: string
   country: string
+  iban?: string
+  swift_code?: string
   date_of_birth: string
   phone: string
   email: string
@@ -547,13 +551,33 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as GrantApplication).full_name}</p>
                 </div>
                 <div>
+                  <p className="text-sm text-muted-foreground">Country</p>
+                  <p className="font-medium">{(selectedItem as GrantApplication).country}</p>
+                </div>
+                <div>
                   <p className="text-sm text-muted-foreground">Date of Birth</p>
                   <p>{(selectedItem as GrantApplication).date_of_birth}</p>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <p className="text-sm text-muted-foreground">Address</p>
-                  <p>{(selectedItem as GrantApplication).home_address}, {(selectedItem as GrantApplication).city}, {(selectedItem as GrantApplication).state}</p>
+                  <p>{(selectedItem as GrantApplication).home_address}</p>
                 </div>
+                <div className="col-span-2">
+                  <p className="text-sm text-muted-foreground">City{(selectedItem as GrantApplication).state && " / State"}</p>
+                  <p>{(selectedItem as GrantApplication).city}{(selectedItem as GrantApplication).state && `, ${(selectedItem as GrantApplication).state}`}</p>
+                </div>
+                {(selectedItem as GrantApplication).iban && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">IBAN Code</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).iban}</p>
+                  </div>
+                )}
+                {(selectedItem as GrantApplication).swift_code && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">SWIFT Code</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).swift_code}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
                   <p>{(selectedItem as GrantApplication).phone}</p>
@@ -669,13 +693,33 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as LoanApplication).full_name}</p>
                 </div>
                 <div>
+                  <p className="text-sm text-muted-foreground">Country</p>
+                  <p className="font-medium">{(selectedItem as LoanApplication).country}</p>
+                </div>
+                <div>
                   <p className="text-sm text-muted-foreground">Date of Birth</p>
                   <p>{(selectedItem as LoanApplication).date_of_birth}</p>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <p className="text-sm text-muted-foreground">Address</p>
-                  <p>{(selectedItem as LoanApplication).home_address}, {(selectedItem as LoanApplication).city}, {(selectedItem as LoanApplication).state}</p>
+                  <p>{(selectedItem as LoanApplication).home_address}</p>
                 </div>
+                <div className="col-span-2">
+                  <p className="text-sm text-muted-foreground">City{(selectedItem as LoanApplication).state && " / State"}</p>
+                  <p>{(selectedItem as LoanApplication).city}{(selectedItem as LoanApplication).state && `, ${(selectedItem as LoanApplication).state}`}</p>
+                </div>
+                {(selectedItem as LoanApplication).iban && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">IBAN Code</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).iban}</p>
+                  </div>
+                )}
+                {(selectedItem as LoanApplication).swift_code && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">SWIFT Code</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).swift_code}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
                   <p>{(selectedItem as LoanApplication).phone}</p>

@@ -43,7 +43,9 @@ function GrantApplicationForm() {
     homeAddress: "",
     state: "",
     city: "",
-    country: "United States",
+    country: "US",
+    iban: "",
+    swiftCode: "",
     dateOfBirth: "",
     phone: "",
     email: "",
@@ -89,7 +91,10 @@ function GrantApplicationForm() {
 
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required"
     if (!formData.homeAddress.trim()) newErrors.homeAddress = "Home address is required"
-    if (!formData.state) newErrors.state = "State is required"
+    if (!formData.country) newErrors.country = "Country is required"
+    if (formData.country === "US") {
+      if (!formData.state) newErrors.state = "State is required"
+    }
     if (!formData.city.trim()) newErrors.city = "City is required"
     if (!formData.dateOfBirth) newErrors.dateOfBirth = "Date of birth is required"
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required"
@@ -321,7 +326,32 @@ function GrantApplicationForm() {
                       {errors.homeAddress && <FieldError>{errors.homeAddress}</FieldError>}
                     </Field>
 
-                    <div className="grid gap-4 sm:grid-cols-3">
+                    <Field>
+                      <FieldLabel htmlFor="country">Country / Region</FieldLabel>
+                      <select
+                        id="country"
+                        value={formData.country}
+                        onChange={(e) => setFormData({ ...formData, country: e.target.value, state: "", iban: "", swiftCode: "" })}
+                        className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
+                      >
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="CN">China</option>
+                        <option value="KR">South Korea</option>
+                        <option value="BR">Brazil</option>
+                        <option value="IN">India</option>
+                        <option value="AU">Australia</option>
+                        <option value="SG">Singapore</option>
+                        <option value="MX">Mexico</option>
+                        <option value="NZ">New Zealand</option>
+                      </select>
+                    </Field>
+
+                    <div className="grid gap-4 sm:grid-cols-2">
                       <Field>
                         <FieldLabel htmlFor="city">City</FieldLabel>
                         <Input
@@ -333,31 +363,49 @@ function GrantApplicationForm() {
                         {errors.city && <FieldError>{errors.city}</FieldError>}
                       </Field>
 
-                      <Field>
-                        <FieldLabel htmlFor="state">State</FieldLabel>
-                        <Select value={formData.state} onValueChange={(value) => setFormData({ ...formData, state: value })}>
-                          <SelectTrigger className={errors.state ? "border-destructive" : ""}>
-                            <SelectValue placeholder="Select state" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {US_STATES.map((state) => (
-                              <SelectItem key={state} value={state}>{state}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {errors.state && <FieldError>{errors.state}</FieldError>}
-                      </Field>
-
-                      <Field>
-                        <FieldLabel htmlFor="country">Country</FieldLabel>
-                        <Input
-                          id="country"
-                          value={formData.country}
-                          disabled
-                          className="bg-muted"
-                        />
-                      </Field>
+                      {formData.country === "US" && (
+                        <Field>
+                          <FieldLabel htmlFor="state">State</FieldLabel>
+                          <Select value={formData.state} onValueChange={(value) => setFormData({ ...formData, state: value })}>
+                            <SelectTrigger className={errors.state ? "border-destructive" : ""}>
+                              <SelectValue placeholder="Select state" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {US_STATES.map((state) => (
+                                <SelectItem key={state} value={state}>{state}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {errors.state && <FieldError>{errors.state}</FieldError>}
+                        </Field>
+                      )}
                     </div>
+
+                    {formData.country !== "US" && (
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <Field>
+                          <FieldLabel htmlFor="iban">IBAN Code (Optional)</FieldLabel>
+                          <Input
+                            id="iban"
+                            type="text"
+                            placeholder="e.g., DE89370400440532013000"
+                            value={formData.iban}
+                            onChange={(e) => setFormData({ ...formData, iban: e.target.value.toUpperCase() })}
+                          />
+                        </Field>
+
+                        <Field>
+                          <FieldLabel htmlFor="swift">SWIFT Code (Optional)</FieldLabel>
+                          <Input
+                            id="swift"
+                            type="text"
+                            placeholder="e.g., DEUTDEFF"
+                            value={formData.swiftCode}
+                            onChange={(e) => setFormData({ ...formData, swiftCode: e.target.value.toUpperCase() })}
+                          />
+                        </Field>
+                      </div>
+                    )}
                   </FieldGroup>
                 </div>
 

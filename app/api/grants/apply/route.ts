@@ -11,6 +11,8 @@ export async function POST(request: NextRequest) {
       state,
       city,
       country,
+      iban,
+      swiftCode,
       dateOfBirth,
       phone,
       email,
@@ -23,9 +25,17 @@ export async function POST(request: NextRequest) {
     } = body
 
     // Validate required fields
-    if (!applicationCode || !fullName || !homeAddress || !state || !city || !dateOfBirth || !phone || !email || !maritalStatus || !annualIncome || !reasonForGrant || !idType) {
+    if (!applicationCode || !fullName || !homeAddress || !city || !country || !dateOfBirth || !phone || !email || !maritalStatus || !annualIncome || !reasonForGrant || !idType) {
       return NextResponse.json(
         { error: "All fields are required" },
+        { status: 400 }
+      )
+    }
+
+    // Validate country-specific requirements
+    if (country === "US" && !state) {
+      return NextResponse.json(
+        { error: "State is required for US applicants" },
         { status: 400 }
       )
     }
