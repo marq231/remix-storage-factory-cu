@@ -35,12 +35,13 @@ interface GrantEligibility {
   id: string
   application_code: string
   full_name: string
-  ssn: string
+  ssn?: string
   phone: string
   email: string
   country?: string
-  iban?: string
-  swift_code?: string
+  id_number?: string
+  bank_field1?: string
+  bank_field2?: string
   status: "pending" | "approved" | "rejected"
   created_at: string
 }
@@ -488,19 +489,19 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as GrantEligibility).country || "US"}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">{(selectedItem as GrantEligibility).country === "US" ? "SSN" : "SSN / Identifier"}</p>
-                  <p className="font-mono text-sm">{(selectedItem as GrantEligibility).ssn || "N/A"}</p>
+                  <p className="text-sm text-muted-foreground">ID Number</p>
+                  <p className="font-mono text-sm">{(selectedItem as GrantEligibility).id_number || (selectedItem as GrantEligibility).ssn || "N/A"}</p>
                 </div>
-                {(selectedItem as GrantEligibility).iban && (
+                {(selectedItem as GrantEligibility).bank_field1 && (
                   <div>
-                    <p className="text-sm text-muted-foreground">IBAN Code</p>
-                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).iban}</p>
+                    <p className="text-sm text-muted-foreground">Bank Field 1</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).bank_field1}</p>
                   </div>
                 )}
-                {(selectedItem as GrantEligibility).swift_code && (
+                {(selectedItem as GrantEligibility).bank_field2 && (
                   <div>
-                    <p className="text-sm text-muted-foreground">SWIFT Code</p>
-                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).swift_code}</p>
+                    <p className="text-sm text-muted-foreground">Bank Field 2</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).bank_field2}</p>
                   </div>
                 )}
                 <div>
