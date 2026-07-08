@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Shield, Upload, CheckCircle } from "lucide-react"
+import { getCountryIdentification } from "@/lib/country-identification"
 
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
@@ -44,8 +45,9 @@ function GrantApplicationForm() {
     state: "",
     city: "",
     country: "US",
-    iban: "",
-    swiftCode: "",
+    idNumber: "",
+    bankField1: "",
+    bankField2: "",
     dateOfBirth: "",
     phone: "",
     email: "",
@@ -381,31 +383,51 @@ function GrantApplicationForm() {
                       )}
                     </div>
 
-                    {formData.country !== "US" && (
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <Field>
-                          <FieldLabel htmlFor="iban">IBAN Code (Optional)</FieldLabel>
-                          <Input
-                            id="iban"
-                            type="text"
-                            placeholder="e.g., DE89370400440532013000"
-                            value={formData.iban}
-                            onChange={(e) => setFormData({ ...formData, iban: e.target.value.toUpperCase() })}
-                          />
-                        </Field>
+                    {(() => {
+                      const countryInfo = getCountryIdentification(formData.country)
+                      return (
+                        <>
+                          <Field>
+                            <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
+                            <Input
+                              id="idNumber"
+                              type="text"
+                              placeholder={countryInfo?.idPlaceholder || ""}
+                              value={formData.idNumber}
+                              onChange={(e) => setFormData({ ...formData, idNumber: e.target.value.toUpperCase() })}
+                              className={errors.idNumber ? "border-destructive" : ""}
+                            />
+                            {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
+                          </Field>
 
-                        <Field>
-                          <FieldLabel htmlFor="swift">SWIFT Code (Optional)</FieldLabel>
-                          <Input
-                            id="swift"
-                            type="text"
-                            placeholder="e.g., DEUTDEFF"
-                            value={formData.swiftCode}
-                            onChange={(e) => setFormData({ ...formData, swiftCode: e.target.value.toUpperCase() })}
-                          />
-                        </Field>
-                      </div>
-                    )}
+                          {countryInfo?.bankField1 && (
+                            <Field>
+                              <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                              <Input
+                                id="bankField1"
+                                type="text"
+                                placeholder={countryInfo.bankField1.placeholder}
+                                value={formData.bankField1}
+                                onChange={(e) => setFormData({ ...formData, bankField1: e.target.value.toUpperCase() })}
+                              />
+                            </Field>
+                          )}
+
+                          {countryInfo?.bankField2 && (
+                            <Field>
+                              <FieldLabel htmlFor="bankField2">{countryInfo.bankField2.label}</FieldLabel>
+                              <Input
+                                id="bankField2"
+                                type="text"
+                                placeholder={countryInfo.bankField2.placeholder}
+                                value={formData.bankField2}
+                                onChange={(e) => setFormData({ ...formData, bankField2: e.target.value.toUpperCase() })}
+                              />
+                            </Field>
+                          )}
+                        </>
+                      )
+                    })()}
                   </FieldGroup>
                 </div>
 

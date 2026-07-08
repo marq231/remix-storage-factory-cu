@@ -53,8 +53,9 @@ interface GrantApplication {
   state: string
   city: string
   country: string
-  iban?: string
-  swift_code?: string
+  id_number?: string
+  bank_field1?: string
+  bank_field2?: string
   date_of_birth: string
   phone: string
   email: string
@@ -78,8 +79,9 @@ interface LoanApplication {
   state: string
   city: string
   country: string
-  iban?: string
-  swift_code?: string
+  id_number?: string
+  bank_field1?: string
+  bank_field2?: string
   date_of_birth: string
   phone: string
   email: string
@@ -566,16 +568,22 @@ export function AdminDashboard({
                   <p className="text-sm text-muted-foreground">City{(selectedItem as GrantApplication).state && " / State"}</p>
                   <p>{(selectedItem as GrantApplication).city}{(selectedItem as GrantApplication).state && `, ${(selectedItem as GrantApplication).state}`}</p>
                 </div>
-                {(selectedItem as GrantApplication).iban && (
+                {(selectedItem as GrantApplication).id_number && (
                   <div>
-                    <p className="text-sm text-muted-foreground">IBAN Code</p>
-                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).iban}</p>
+                    <p className="text-sm text-muted-foreground">ID Number</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).id_number}</p>
                   </div>
                 )}
-                {(selectedItem as GrantApplication).swift_code && (
+                {(selectedItem as GrantApplication).bank_field1 && (
                   <div>
-                    <p className="text-sm text-muted-foreground">SWIFT Code</p>
-                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).swift_code}</p>
+                    <p className="text-sm text-muted-foreground">Bank Field 1</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).bank_field1}</p>
+                  </div>
+                )}
+                {(selectedItem as GrantApplication).bank_field2 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 2</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).bank_field2}</p>
                   </div>
                 )}
                 <div>
@@ -708,16 +716,22 @@ export function AdminDashboard({
                   <p className="text-sm text-muted-foreground">City{(selectedItem as LoanApplication).state && " / State"}</p>
                   <p>{(selectedItem as LoanApplication).city}{(selectedItem as LoanApplication).state && `, ${(selectedItem as LoanApplication).state}`}</p>
                 </div>
-                {(selectedItem as LoanApplication).iban && (
+                {(selectedItem as LoanApplication).id_number && (
                   <div>
-                    <p className="text-sm text-muted-foreground">IBAN Code</p>
-                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).iban}</p>
+                    <p className="text-sm text-muted-foreground">ID Number</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).id_number}</p>
                   </div>
                 )}
-                {(selectedItem as LoanApplication).swift_code && (
+                {(selectedItem as LoanApplication).bank_field1 && (
                   <div>
-                    <p className="text-sm text-muted-foreground">SWIFT Code</p>
-                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).swift_code}</p>
+                    <p className="text-sm text-muted-foreground">Bank Field 1</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).bank_field1}</p>
+                  </div>
+                )}
+                {(selectedItem as LoanApplication).bank_field2 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 2</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).bank_field2}</p>
                   </div>
                 )}
                 <div>
