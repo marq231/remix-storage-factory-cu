@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { WhatsAppButton } from '@/components/whatsapp-button'
-import { I18nProvider } from '@/components/providers/i18n-provider'
 import './globals.css'
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -40,11 +39,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
-        <I18nProvider>
-          {children}
-          <WhatsAppButton />
-          {process.env.NODE_ENV === 'production' && <Analytics />}
-        </I18nProvider>
+        {children}
+        <WhatsAppButton />
+        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
