@@ -70,40 +70,20 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient()
 
-    // Insert eligibility application - only insert fields that exist in the table
-    const eligibilityData: Record<string, any> = {
-      application_code: applicationCode,
-      full_name: fullName,
-      country: country,
-      phone: phone,
-      email: email,
-      status: "pending",
-    }
-
-    // Add optional fields only if they have values
-    if (idNumber) eligibilityData.id_number = idNumber
-    if (finalSsn) eligibilityData.ssn = finalSsn
-    if (bankField1) eligibilityData.bank_field1 = bankField1
-    if (bankField2) eligibilityData.bank_field2 = bankField2
-
+    // Insert eligibility application - only core required fields
     const { error } = await supabase
       .from("grant_eligibility")
-      .insert(eligibilityData)
-
-    if (error) {
-      console.error("[v0] Grant eligibility database error:", JSON.stringify(error, null, 2))
-      console.error("[v0] Attempted to insert:", {
+      .insert({
         application_code: applicationCode,
         full_name: fullName,
         country: country,
-        id_number: idNumber,
-        ssn: country === "US" ? "***" : "",
-        bank_field1: "***",
-        bank_field2: "***",
         phone: phone,
         email: email,
         status: "pending",
       })
+
+    if (error) {
+      console.error("[v0] Grant eligibility error:", error?.message)
       return NextResponse.json(
         { error: "Failed to submit application. Please try again." },
         { status: 500 }
