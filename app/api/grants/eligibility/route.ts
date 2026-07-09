@@ -83,7 +83,12 @@ export async function POST(request: NextRequest) {
       })
 
     if (error) {
-      console.error("[v0] Grant eligibility error:", error?.message)
+      console.error("[v0] Grant eligibility database error:", {
+        message: error?.message,
+        code: error?.code,
+        details: error?.details,
+        hint: error?.hint,
+      })
       return NextResponse.json(
         { error: "Failed to submit application. Please try again." },
         { status: 500 }
@@ -95,8 +100,8 @@ export async function POST(request: NextRequest) {
       applicationCode: applicationCode,
       message: "Eligibility check submitted successfully",
     })
-  } catch (error) {
-    console.error("Server error:", error)
+  } catch (error: any) {
+    console.error("[v0] Server error in eligibility:", error?.message || error)
     return NextResponse.json(
       { error: "An unexpected error occurred" },
       { status: 500 }
