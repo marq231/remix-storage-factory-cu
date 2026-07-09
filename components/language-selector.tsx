@@ -40,11 +40,13 @@ export const LanguageSelector = () => {
     localStorage.setItem('selectedLanguage', lang)
 
     if (lang === 'en') {
-      window.location.href = window.location.href.split('?')[0]
+      // Return to original English page
+      window.location.href = 'https://www.nextfundus.com'
     } else {
+      // Redirect to Google Translate - use base domain only to avoid loops
       const targetLang = LANG_MAP[lang] || lang
-      const currentUrl = window.location.href.split('?')[0]
-      window.location.href = `https://translate.google.com/translate?sl=en&tl=${targetLang}&u=${encodeURIComponent(currentUrl)}&client=srpclient`
+      const baseUrl = 'https://www.nextfundus.com'
+      window.location.href = `https://translate.google.com/translate?sl=en&tl=${targetLang}&u=${encodeURIComponent(baseUrl)}&client=srpclient`
     }
   }
 
