@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Globe } from 'lucide-react'
+import { useState } from 'react'
 
 const LANGUAGES = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -17,92 +17,41 @@ const LANGUAGES = [
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ]
 
+const LANG_MAP: { [key: string]: string } = {
+  es: 'es',
+  fr: 'fr',
+  de: 'de',
+  pt: 'pt',
+  ja: 'ja',
+  zh: 'zh-CN',
+  ar: 'ar',
+  hi: 'hi',
+  ko: 'ko',
+  ru: 'ru',
+}
+
 export const LanguageSelector = () => {
-  const [currentLang, setCurrentLang] = useState<string>('en')
   const [isOpen, setIsOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    const saved = localStorage.getItem('selectedLanguage') || 'en'
-    setCurrentLang(saved)
-
-    // Initialize Google Translate
-    const initGoogleTranslate = () => {
-      const script = document.createElement('script')
-      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
-      script.async = true
-
-      ;(window as any).googleTranslateElementInit = function () {
-        if (document.getElementById('google-translate-element')) {
-          try {
-            new (window as any).google.translate.TranslateElement(
-              {
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,pt,ja,zh-CN,ar,hi,ko,ru',
-                layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
-              },
-              'google-translate-element'
-            )
-          } catch (e) {
-            console.error('[v0] Google Translate error:', e)
-          }
-        }
-      }
-
-      if (!document.getElementById('google-translate-script')) {
-        script.id = 'google-translate-script'
-        document.head.appendChild(script)
-      }
-    }
-
-    initGoogleTranslate()
-  }, [])
+  const [currentLang, setCurrentLang] = useState<string>('en')
 
   const handleLanguageChange = (lang: string) => {
     setCurrentLang(lang)
-    localStorage.setItem('selectedLanguage', lang)
     setIsOpen(false)
+    localStorage.setItem('selectedLanguage', lang)
 
     if (lang === 'en') {
-      window.location.reload()
+      window.location.href = window.location.href.split('?')[0]
     } else {
-      // Trigger Google Translate
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (select) {
-        const langMap: { [key: string]: string } = {
-          es: 'es',
-          fr: 'fr',
-          de: 'de',
-          pt: 'pt',
-          ja: 'ja',
-          zh: 'zh-CN',
-          ar: 'ar',
-          hi: 'hi',
-          ko: 'ko',
-          ru: 'ru',
-        }
-        select.value = langMap[lang] || lang
-        select.dispatchEvent(new Event('change'))
-      }
+      const targetLang = LANG_MAP[lang] || lang
+      const currentUrl = window.location.href.split('?')[0]
+      window.location.href = `https://translate.google.com/translate?sl=en&tl=${targetLang}&u=${encodeURIComponent(currentUrl)}&client=srpclient`
     }
   }
 
   const currentLangObj = LANGUAGES.find(l => l.code === currentLang)
 
-  if (!mounted) {
-    return (
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg">
-        <Globe className="w-5 h-5 text-white" />
-        <span className="text-sm font-bold text-white">Translate</span>
-      </div>
-    )
-  }
-
   return (
     <>
-      <div id="google-translate-element" style={{ display: 'none' }}></div>
-
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
