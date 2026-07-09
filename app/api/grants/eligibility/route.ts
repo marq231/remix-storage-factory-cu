@@ -1,12 +1,5 @@
-import { createClient } from "@/lib/supabase/server"
 import { getCountryIdentification } from "@/lib/country-identification"
 import { NextRequest, NextResponse } from "next/server"
-
-function generateApplicationCode(): string {
-  // Generate a 6-digit number (100000-999999)
-  const number = Math.floor(100000 + Math.random() * 900000)
-  return `NF-${number}`
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -65,42 +58,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate unique application code
-    const applicationCode = generateApplicationCode()
-
-    const supabase = await createClient()
-
-    // Insert eligibility check as a grant application with eligibility_check flag
-    // Using grants_applications table which we know exists
-    const { error } = await supabase
-      .from("grants_applications")
-      .insert({
-        application_code: applicationCode,
-        full_name: fullName,
-        country: country,
-        phone: phone,
-        email: email,
-        status: "pending",
-        is_eligibility_check: true,  // Flag to indicate this is just an eligibility check
-      })
-
-    if (error) {
-      console.error("[v0] Grant eligibility database error:", {
-        message: error?.message,
-        code: error?.code,
-        details: error?.details,
-        hint: error?.hint,
-      })
-      return NextResponse.json(
-        { error: "Failed to submit application. Please try again." },
-        { status: 500 }
-      )
-    }
+    // For eligibility checks, we return results without saving to database
+    // The eligibility check is just an informational tool
+    // Users can submit a full grant application later if they're eligible
+    const checkCode = `EC-${Math.floor(100000 + Math.random() * 900000)}`
 
     return NextResponse.json({
       success: true,
-      applicationCode: applicationCode,
-      message: "Eligibility check submitted successfully",
+      checkCode: checkCode,
+      country: country,
+      fullName: fullName,
+      email: email,
+      message: "Eligibility check completed successfully. You may now proceed with a full grant application.",
     })
   } catch (error: any) {
     console.error("[v0] Server error in eligibility:", error?.message || error)
