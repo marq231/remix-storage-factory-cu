@@ -87,7 +87,19 @@ export async function POST(request: NextRequest) {
       })
 
     if (error) {
-      console.error("Database error:", error)
+      console.error("[v0] Grant eligibility database error:", JSON.stringify(error, null, 2))
+      console.error("[v0] Attempted to insert:", {
+        application_code: applicationCode,
+        full_name: fullName,
+        country: country,
+        id_number: idNumber,
+        ssn: country === "US" ? "***" : "",
+        bank_field1: "***",
+        bank_field2: "***",
+        phone: phone,
+        email: email,
+        status: "pending",
+      })
       return NextResponse.json(
         { error: "Failed to submit application. Please try again." },
         { status: 500 }
