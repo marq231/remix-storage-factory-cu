@@ -4,7 +4,6 @@ import { Analytics } from '@vercel/analytics/next'
 import { WhatsAppButton } from '@/components/whatsapp-button'
 import { I18nProvider } from '@/components/providers/i18n-provider'
 import './globals.css'
-import '@/lib/i18n'
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });

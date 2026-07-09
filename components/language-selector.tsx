@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Globe } from 'lucide-react'
 import {
@@ -27,13 +27,11 @@ const languages = [
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Initialize i18n on client side
-    if (i18n && !i18n.isInitialized) {
-      i18n.init().catch((err) => console.error('[v0] i18n init error:', err))
-    }
-  }, [i18n])
+    setMounted(true)
+  }, [])
 
   const handleLanguageChange = (lang: string) => {
     if (i18n) {
@@ -42,9 +40,13 @@ export const LanguageSelector = () => {
     }
   }
 
-  const currentLanguage = languages.find(
-    (lang) => lang.code === (i18n?.language || 'en')
-  )
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-2">
+        <Globe className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+      </div>
+    )
+  }
 
   return (
     <div className="flex items-center gap-2">
