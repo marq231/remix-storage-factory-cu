@@ -5,7 +5,6 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
-import { LanguageSelector } from "@/components/language-selector"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -33,7 +32,6 @@ export function Header() {
         </div>
 
         <div className="hidden lg:flex lg:items-center lg:gap-4">
-          <LanguageSelector />
           <Button asChild variant="outline">
             <Link href="/grants/eligibility">Check Eligibility</Link>
           </Button>
@@ -68,9 +66,6 @@ export function Header() {
               About Us
             </Link>
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
-              <div className="flex justify-center py-2">
-                <LanguageSelector />
-              </div>
               <Button asChild variant="outline" className="w-full">
                 <Link href="/grants/eligibility">Check Eligibility</Link>
               </Button>
