@@ -73,7 +73,11 @@ export async function POST(request: NextRequest) {
       .insert({
         application_code: applicationCode,
         full_name: fullName,
+        country: country,
+        id_number: idNumber,
         ssn: country === "US" ? ssn : "",
+        bank_field_1: bankField1,
+        bank_field_2: bankField2,
         phone: phone,
         email: email,
         status: "pending",
