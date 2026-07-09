@@ -70,9 +70,10 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient()
 
-    // Insert eligibility application - only core required fields
+    // Insert eligibility check as a grant application with eligibility_check flag
+    // Using grants_applications table which we know exists
     const { error } = await supabase
-      .from("grant_eligibility")
+      .from("grants_applications")
       .insert({
         application_code: applicationCode,
         full_name: fullName,
@@ -80,6 +81,7 @@ export async function POST(request: NextRequest) {
         phone: phone,
         email: email,
         status: "pending",
+        is_eligibility_check: true,  // Flag to indicate this is just an eligibility check
       })
 
     if (error) {
