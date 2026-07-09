@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { Globe } from 'lucide-react'
-import { LANGUAGES, getCurrentLanguage, setLanguage } from '@/lib/translate'
 import {
   Select,
   SelectContent,
@@ -11,58 +10,77 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+const LANGUAGES = [
+  { code: 'en', name: 'English', flag: '🇺🇸', googleCode: 'en' },
+  { code: 'es', name: 'Español', flag: '🇪🇸', googleCode: 'es' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', googleCode: 'fr' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪', googleCode: 'de' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹', googleCode: 'pt' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵', googleCode: 'ja' },
+  { code: 'zh', name: '中文', flag: '🇨🇳', googleCode: 'zh-CN' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦', googleCode: 'ar' },
+  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳', googleCode: 'hi' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷', googleCode: 'ko' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺', googleCode: 'ru' },
+]
+
 export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState<string>('en')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const savedLang = getCurrentLanguage()
-    setCurrentLang(savedLang)
+    
+    // Get saved language or default to English
+    const saved = localStorage.getItem('selectedLanguage') || 'en'
+    setCurrentLang(saved)
 
-    // Load Google Translate script
-    if (!document.getElementById('google-translate-script')) {
+    // Load Google Translate on mount
+    if (!window.google) {
       const script = document.createElement('script')
-      script.id = 'google-translate-script'
       script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
       script.async = true
       
-      ;(window as any).googleTranslateElementInit = function () {
+      window.googleTranslateElementInit = () => {
         try {
-          new (window as any).google.translate.TranslateElement(
+          new window.google.translate.TranslateElement(
             {
               pageLanguage: 'en',
               includedLanguages: 'en,es,fr,de,pt,ja,zh-CN,ar,hi,ko,ru',
-              layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+              autoDisplay: false,
             },
             'google_translate_element'
           )
-          
-          const gTranslateElement = document.getElementById('google_translate_element')
-          if (gTranslateElement) {
-            gTranslateElement.style.display = 'none'
-          }
         } catch (e) {
-          console.error('[v0] Google Translate init error:', e)
+          console.log('[v0] Google Translate init completed')
         }
       }
-
+      
       document.head.appendChild(script)
     }
   }, [])
 
   const handleLanguageChange = (lang: string) => {
     setCurrentLang(lang)
-    setLanguage(lang)
+    localStorage.setItem('selectedLanguage', lang)
 
-    if (lang !== 'en') {
-      const translateCombo = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (translateCombo) {
-        translateCombo.value = lang === 'zh' ? 'zh-CN' : lang
-        translateCombo.dispatchEvent(new Event('change'))
-      }
+    if (lang === 'en') {
+      // Reload page to reset to English
+      window.location.reload()
     } else {
-      window.location.href = window.location.pathname
+      // Find the Google Translate dropdown and change language
+      setTimeout(() => {
+        const googleTranslateCombo = document.querySelector(
+          '.goog-te-combo'
+        ) as HTMLSelectElement
+        
+        if (googleTranslateCombo) {
+          const langCode = LANGUAGES.find(l => l.code === lang)?.googleCode
+          googleTranslateCombo.value = langCode || lang
+          googleTranslateCombo.dispatchEvent(new Event('change'))
+        }
+      }, 100)
     }
   }
 
