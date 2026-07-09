@@ -39,9 +39,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate international applicants have required bank fields
-    if (country !== "US" && (!bankField1 || !bankField2)) {
+    if (country !== "US" && !bankField1) {
       return NextResponse.json(
-        { error: `${countryInfo.bankField1?.label} and ${countryInfo.bankField2?.label} are required for ${countryInfo.name} residents` },
+        { error: `${countryInfo.bankField1?.label} is required for ${countryInfo.name} residents` },
+        { status: 400 }
+      )
+    }
+
+    // If country requires a second bank field, validate it
+    if (country !== "US" && countryInfo.bankField2 && !bankField2) {
+      return NextResponse.json(
+        { error: `${countryInfo.bankField2?.label} is required for ${countryInfo.name} residents` },
         { status: 400 }
       )
     }

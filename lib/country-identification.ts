@@ -38,7 +38,6 @@ export const COUNTRY_IDENTIFICATIONS: Record<string, CountryIdRequirement> = {
     idPlaceholder: 'XXX.XXX.XXX-XX',
     idPattern: /^\d{3}\.\d{3}\.\d{3}-?\d{2}$/,
     bankField1: { label: 'IBAN', placeholder: 'BR94 0000 0000 0000 0000 0000 0 00' },
-    bankField2: { label: 'SWIFT Code', placeholder: 'XXXBXXXXX' },
   },
   JP: {
     code: 'JP',
@@ -58,7 +57,6 @@ export const COUNTRY_IDENTIFICATIONS: Record<string, CountryIdRequirement> = {
     idPlaceholder: '110101199003071234',
     idPattern: /^\d{18}$/,
     bankField1: { label: 'IBAN', placeholder: 'CNxxxxxxxxxxxxxxxx' },
-    bankField2: { label: 'SWIFT Code', placeholder: 'XXXCNXX' },
   },
   KR: {
     code: 'KR',
@@ -97,7 +95,6 @@ export const COUNTRY_IDENTIFICATIONS: Record<string, CountryIdRequirement> = {
     idLabel: 'ID Card Number',
     idPlaceholder: 'C00000000-4',
     bankField1: { label: 'IBAN', placeholder: 'DE89 3704 0044 0532 0130 00' },
-    bankField2: { label: 'SWIFT Code', placeholder: 'DEUTDEFF' },
   },
   FR: {
     code: 'FR',
@@ -106,7 +103,6 @@ export const COUNTRY_IDENTIFICATIONS: Record<string, CountryIdRequirement> = {
     idLabel: 'INSEE Number',
     idPlaceholder: '1 85 04 71 055 628',
     bankField1: { label: 'IBAN', placeholder: 'FR14 2004 1010 0505 0001 3M02 606' },
-    bankField2: { label: 'SWIFT Code', placeholder: 'BNAGFRPP' },
   },
   AU: {
     code: 'AU',
@@ -144,7 +140,6 @@ export const COUNTRY_IDENTIFICATIONS: Record<string, CountryIdRequirement> = {
     idPlaceholder: 'XX-XXX-XXX',
     idPattern: /^\d{2}-?\d{3}-?\d{3}$/,
     bankField1: { label: 'Bank Account Number', placeholder: '01-1234-1234567-00' },
-    bankField2: { label: 'SWIFT Code', placeholder: 'PBNZNNZZ' },
   },
 }
 
