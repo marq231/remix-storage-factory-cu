@@ -11,7 +11,7 @@ function generateApplicationCode(): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { fullName, country, ssn, bankField1, bankField2, phone, email } = body
+    const { fullName, country, idNumber, ssn, bankField1, bankField2, phone, email } = body
 
     // Validate required fields
     if (!fullName || !phone || !email || !country) {
@@ -30,8 +30,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // For US, idNumber contains the SSN
+    const finalSsn = country === "US" ? idNumber : ssn
+
     // Validate country-specific identifiers
-    if (country === "US" && !ssn) {
+    if (country === "US" && !finalSsn) {
       return NextResponse.json(
         { error: "SSN is required for US residents" },
         { status: 400 }
@@ -75,7 +78,7 @@ export async function POST(request: NextRequest) {
         full_name: fullName,
         country: country,
         id_number: idNumber,
-        ssn: country === "US" ? ssn : "",
+        ssn: country === "US" ? finalSsn : "",
         bank_field_1: bankField1,
         bank_field_2: bankField2,
         phone: phone,
