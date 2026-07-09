@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
+import { getCountryIdentification } from "@/lib/country-identification"
 import { NextRequest, NextResponse } from "next/server"
 
 function generateApplicationCode(): string {
@@ -10,12 +11,21 @@ function generateApplicationCode(): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { fullName, country, ssn, iban, swiftCode, phone, email } = body
+    const { fullName, country, ssn, bankField1, bankField2, phone, email } = body
 
     // Validate required fields
     if (!fullName || !phone || !email || !country) {
       return NextResponse.json(
         { error: "All fields are required" },
+        { status: 400 }
+      )
+    }
+
+    // Get country-specific identification requirements
+    const countryInfo = getCountryIdentification(country)
+    if (!countryInfo) {
+      return NextResponse.json(
+        { error: "Invalid country selected" },
         { status: 400 }
       )
     }
@@ -28,9 +38,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (country !== "US" && !iban && !swiftCode) {
+    // Validate international applicants have required bank fields
+    if (country !== "US" && (!bankField1 || !bankField2)) {
       return NextResponse.json(
-        { error: "IBAN or SWIFT code is required for international applicants" },
+        { error: `${countryInfo.bankField1?.label} and ${countryInfo.bankField2?.label} are required for ${countryInfo.name} residents` },
         { status: 400 }
       )
     }

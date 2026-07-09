@@ -232,7 +232,7 @@ export default function EligibilityPage() {
                         <select
                           id="country"
                           value={checkFormData.country}
-                          onChange={(e) => setCheckFormData({ ...checkFormData, country: e.target.value, ssn: "", iban: "", swiftCode: "" })}
+                          onChange={(e) => setCheckFormData({ ...checkFormData, country: e.target.value, idNumber: "", bankField1: "", bankField2: "" })}
                           className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
                         >
                           <option value="US">United States</option>
