@@ -24,52 +24,22 @@ const LANGUAGES = [
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ]
 
-const translatePage = async (fromLang: string, toLang: string) => {
-  if (toLang === 'en') {
-    // For English, just reload the page
-    window.location.reload()
-    return
-  }
-
-  try {
-    // Get all text nodes on the page
-    const elements = document.querySelectorAll(
-      'h1, h2, h3, h4, h5, h6, p, span, button, label, a, input, textarea, div'
-    )
-
-    for (const element of elements) {
-      if (element.children.length === 0 && element.textContent && element.textContent.trim()) {
-        const text = element.textContent.trim()
-        
-        // Skip if text is too short or contains special characters
-        if (text.length < 2 || /^[0-9$,\-\s%]*$/.test(text)) continue
-
-        try {
-          const response = await fetch(
-            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`
-          )
-          const data = await response.json()
-          
-          if (data.responseData.translatedText && data.responseData.translatedText !== text) {
-            element.textContent = data.responseData.translatedText
-          }
-        } catch (e) {
-          console.log('[v0] Translation skipped for:', text)
-        }
-
-        // Add small delay to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 50))
-      }
-    }
-  } catch (error) {
-    console.error('[v0] Translation error:', error)
-  }
+const LANG_MAP: { [key: string]: string } = {
+  es: 'es',
+  fr: 'fr',
+  de: 'de',
+  pt: 'pt',
+  ja: 'ja',
+  'zh': 'zh-CN',
+  ar: 'ar',
+  hi: 'hi',
+  ko: 'ko',
+  ru: 'ru',
 }
 
 export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState<string>('en')
   const [mounted, setMounted] = useState(false)
-  const [isTranslating, setIsTranslating] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -77,14 +47,31 @@ export const LanguageSelector = () => {
     setCurrentLang(saved)
   }, [])
 
-  const handleLanguageChange = async (lang: string) => {
+  const handleLanguageChange = (lang: string) => {
     setCurrentLang(lang)
     localStorage.setItem('selectedLanguage', lang)
-    setIsTranslating(true)
 
-    await translatePage('en', lang)
-    
-    setIsTranslating(false)
+    if (lang === 'en') {
+      window.location.reload()
+    } else {
+      // Use the simple, reliable method: add Google Translate class to html
+      const html = document.documentElement
+      
+      // Remove existing Google Translate class
+      Array.from(html.classList).forEach(className => {
+        if (className.startsWith('translated-')) {
+          html.classList.remove(className)
+        }
+      })
+
+      // Set language attribute
+      html.lang = LANG_MAP[lang] || lang
+
+      // Reload page so Google Translate picks it up from the language attribute
+      setTimeout(() => {
+        window.location.reload()
+      }, 300)
+    }
   }
 
   const currentLangObj = LANGUAGES.find(l => l.code === currentLang)
@@ -99,11 +86,11 @@ export const LanguageSelector = () => {
   }
 
   return (
-    <Select value={currentLang} onValueChange={handleLanguageChange} disabled={isTranslating}>
-      <SelectTrigger className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-2 border-blue-700 shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-auto cursor-pointer transition-all font-bold text-white disabled:opacity-75 disabled:cursor-not-allowed">
-        <Globe className={`w-5 h-5 text-white flex-shrink-0 ${isTranslating ? 'animate-spin' : ''}`} />
+    <Select value={currentLang} onValueChange={handleLanguageChange}>
+      <SelectTrigger className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-2 border-blue-700 shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-auto cursor-pointer transition-all font-bold text-white">
+        <Globe className="w-5 h-5 text-white flex-shrink-0" />
         <span className="hidden sm:inline text-white font-bold">
-          {isTranslating ? 'Translating...' : `${currentLangObj?.flag} Translate`}
+          {currentLangObj?.flag} Translate
         </span>
         <span className="sm:hidden text-white font-bold">
           {currentLangObj?.flag}
