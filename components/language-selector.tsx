@@ -24,19 +24,6 @@ const LANGUAGES = [
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ]
 
-const LANG_MAP: { [key: string]: string } = {
-  es: 'es',
-  fr: 'fr',
-  de: 'de',
-  pt: 'pt',
-  ja: 'ja',
-  'zh': 'zh-CN',
-  ar: 'ar',
-  hi: 'hi',
-  ko: 'ko',
-  ru: 'ru',
-}
-
 export const LanguageSelector = () => {
   const [currentLang, setCurrentLang] = useState<string>('en')
   const [mounted, setMounted] = useState(false)
@@ -45,6 +32,28 @@ export const LanguageSelector = () => {
     setMounted(true)
     const saved = localStorage.getItem('selectedLanguage') || 'en'
     setCurrentLang(saved)
+
+    // Initialize Google Translate on mount
+    if (!window.googleTranslateInitialized) {
+      const script = document.createElement('script')
+      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+      script.async = true
+      ;(window as any).googleTranslateElementInit = function () {
+        if ((window as any).google?.translate) {
+          new (window as any).google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              includedLanguages: 'en,es,fr,de,pt,ja,zh-CN,ar,hi,ko,ru',
+              layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+              autoDisplay: false,
+            },
+            'google-translate-element'
+          )
+        }
+      }
+      document.head.appendChild(script)
+      ;(window as any).googleTranslateInitialized = true
+    }
   }, [])
 
   const handleLanguageChange = (lang: string) => {
@@ -52,25 +61,15 @@ export const LanguageSelector = () => {
     localStorage.setItem('selectedLanguage', lang)
 
     if (lang === 'en') {
-      window.location.reload()
+      location.reload()
     } else {
-      // Use the simple, reliable method: add Google Translate class to html
-      const html = document.documentElement
-      
-      // Remove existing Google Translate class
-      Array.from(html.classList).forEach(className => {
-        if (className.startsWith('translated-')) {
-          html.classList.remove(className)
-        }
-      })
-
-      // Set language attribute
-      html.lang = LANG_MAP[lang] || lang
-
-      // Reload page so Google Translate picks it up from the language attribute
-      setTimeout(() => {
-        window.location.reload()
-      }, 300)
+      // Find and click the Google Translate combo
+      const combo = document.querySelector('.goog-te-combo') as HTMLSelectElement
+      if (combo) {
+        const langCode = lang === 'zh' ? 'zh-CN' : lang
+        combo.value = langCode
+        combo.dispatchEvent(new Event('change'))
+      }
     }
   }
 
@@ -86,26 +85,30 @@ export const LanguageSelector = () => {
   }
 
   return (
-    <Select value={currentLang} onValueChange={handleLanguageChange}>
-      <SelectTrigger className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-2 border-blue-700 shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-auto cursor-pointer transition-all font-bold text-white">
-        <Globe className="w-5 h-5 text-white flex-shrink-0" />
-        <span className="hidden sm:inline text-white font-bold">
-          {currentLangObj?.flag} Translate
-        </span>
-        <span className="sm:hidden text-white font-bold">
-          {currentLangObj?.flag}
-        </span>
-      </SelectTrigger>
-      <SelectContent className="min-w-[220px]">
-        {LANGUAGES.map((lang) => (
-          <SelectItem key={lang.code} value={lang.code} className="cursor-pointer py-2">
-            <div className="flex items-center gap-3">
-              <span className="text-xl">{lang.flag}</span>
-              <span className="font-medium">{lang.name}</span>
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <>
+      <div id="google-translate-element" style={{ display: 'none' }}></div>
+
+      <Select value={currentLang} onValueChange={handleLanguageChange}>
+        <SelectTrigger className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-2 border-blue-700 shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-auto cursor-pointer transition-all font-bold text-white">
+          <Globe className="w-5 h-5 text-white flex-shrink-0" />
+          <span className="hidden sm:inline text-white font-bold">
+            {currentLangObj?.flag} Translate
+          </span>
+          <span className="sm:hidden text-white font-bold">
+            {currentLangObj?.flag}
+          </span>
+        </SelectTrigger>
+        <SelectContent className="min-w-[220px]">
+          {LANGUAGES.map((lang) => (
+            <SelectItem key={lang.code} value={lang.code} className="cursor-pointer py-2">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">{lang.flag}</span>
+                <span className="font-medium">{lang.name}</span>
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
   )
 }
