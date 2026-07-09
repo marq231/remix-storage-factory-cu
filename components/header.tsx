@@ -68,6 +68,9 @@ export function Header() {
               About Us
             </Link>
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
+              <div className="flex justify-center py-2">
+                <LanguageSelector />
+              </div>
               <Button asChild variant="outline" className="w-full">
                 <Link href="/grants/eligibility">Check Eligibility</Link>
               </Button>
