@@ -70,18 +70,18 @@ export async function POST(request: NextRequest) {
         application_code: applicationCode,
         full_name: fullName,
         country: country,
-        id_number: idNumber || null,
-        ssn: country === "US" ? finalSsn : null,
-        bank_field1: bankField1 || null,
-        bank_field2: bankField2 || null,
         phone: phone,
         email: email,
         status: "submitted",
       })
 
-    // Log error but don't fail - eligibility check is still valid
     if (dbError) {
-      console.error("[v0] Eligibility check database error:", dbError?.message)
+      console.error("[v0] Eligibility database insert failed:", {
+        code: dbError.code,
+        message: dbError.message,
+        details: dbError.details,
+        hint: dbError.hint,
+      })
     }
 
     return NextResponse.json({
