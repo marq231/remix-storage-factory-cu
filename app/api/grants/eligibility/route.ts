@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createServiceClient } from "@/lib/supabase/server"
 import { getCountryIdentification } from "@/lib/country-identification"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -62,8 +62,8 @@ export async function POST(request: NextRequest) {
     // Generate unique application code
     const applicationCode = `NF-${Math.floor(100000 + Math.random() * 900000)}`
 
-    // Save eligibility check to database
-    const supabase = await createClient()
+    // Save eligibility check to database using service role
+    const supabase = createServiceClient()
     
     // For the ssn field in database, use idNumber for all applicants
     // The schema requires SSN field for everyone

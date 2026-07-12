@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createServiceClient } from "@/lib/supabase/server"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
@@ -21,8 +21,8 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Look up eligibility check in database
-    const supabase = await createClient()
+    // Look up eligibility check in database using service role
+    const supabase = createServiceClient()
     const { data, error } = await supabase
       .from("grant_eligibility")
       .select("application_code, full_name, status")
