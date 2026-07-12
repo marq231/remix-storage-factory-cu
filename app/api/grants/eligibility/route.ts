@@ -81,13 +81,21 @@ export async function POST(request: NextRequest) {
       })
 
     if (dbError) {
-      console.error("[v0] Database save error:", {
+      console.error("[v0] ELIGIBILITY DATABASE ERROR - CRITICAL:", {
         message: dbError.message,
         code: dbError.code,
         details: dbError.details,
+        hint: dbError.hint,
+        fullError: JSON.stringify(dbError),
       })
       // Don't fail the request - eligibility check is still valid
       // The code is generated and can be used even if database save fails
+    } else {
+      console.log("[v0] ELIGIBILITY SAVED SUCCESSFULLY:", {
+        applicationCode: applicationCode,
+        fullName: fullName,
+        email: email,
+      })
     }
 
     // Return success with eligibility check results
