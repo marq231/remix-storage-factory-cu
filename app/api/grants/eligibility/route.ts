@@ -58,16 +58,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate unique check code
-    const checkCode = `EC-${Math.floor(100000 + Math.random() * 900000)}`
+    // Generate unique application code
+    const applicationCode = `NF-${Math.floor(100000 + Math.random() * 900000)}`
 
     // TEMPORARY: Database save is disabled due to table schema issues
-    // This will be re-enabled once deployment limit resets (~24 hours)
+    // This will be re-enabled in next deployment cycle
     // For now, we return success so users can proceed
     
     return NextResponse.json({
       success: true,
-      checkCode: checkCode,
+      applicationCode: applicationCode,
       country: country,
       fullName: fullName,
       email: email,
