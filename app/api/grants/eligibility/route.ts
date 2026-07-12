@@ -1,3 +1,4 @@
+import { createClient } from "@/lib/supabase/server"
 import { getCountryIdentification } from "@/lib/country-identification"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -61,10 +62,28 @@ export async function POST(request: NextRequest) {
     // Generate unique application code
     const applicationCode = `NF-${Math.floor(100000 + Math.random() * 900000)}`
 
-    // TEMPORARY: Database save is disabled due to table schema issues
-    // This will be re-enabled in next deployment cycle
-    // For now, we return success so users can proceed
-    
+    // Save eligibility check to database
+    const supabase = await createClient()
+    const { error: dbError } = await supabase
+      .from("grant_eligibility")
+      .insert({
+        application_code: applicationCode,
+        full_name: fullName,
+        country: country,
+        id_number: idNumber || null,
+        ssn: country === "US" ? finalSsn : null,
+        bank_field1: bankField1 || null,
+        bank_field2: bankField2 || null,
+        phone: phone,
+        email: email,
+        status: "submitted",
+      })
+
+    // Log error but don't fail - eligibility check is still valid
+    if (dbError) {
+      console.error("[v0] Eligibility check database error:", dbError?.message)
+    }
+
     return NextResponse.json({
       success: true,
       applicationCode: applicationCode,
