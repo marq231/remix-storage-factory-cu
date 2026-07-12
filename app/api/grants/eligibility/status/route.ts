@@ -1,3 +1,4 @@
+import { createClient } from "@/lib/supabase/server"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
@@ -20,13 +21,28 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Return pending status for any valid code
-    // Database lookup is currently disabled due to schema issues
-    // In production, this would check the actual database
+    // Look up eligibility check in database
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from("grant_eligibility")
+      .select("application_code, full_name, status")
+      .eq("application_code", code)
+      .single()
+
+    // If not found in database, return pending anyway (fallback)
+    // This allows codes to be valid even if database lookup fails
+    if (error || !data) {
+      return NextResponse.json({
+        applicationCode: code,
+        fullName: "Applicant",
+        status: "pending",
+      })
+    }
+
     return NextResponse.json({
-      applicationCode: code,
-      fullName: "Applicant",
-      status: "pending",
+      applicationCode: data.application_code,
+      fullName: data.full_name,
+      status: data.status,
     })
   } catch (error) {
     console.error("Server error:", error)

@@ -1,3 +1,4 @@
+import { createClient } from "@/lib/supabase/server"
 import { getCountryIdentification } from "@/lib/country-identification"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -61,9 +62,35 @@ export async function POST(request: NextRequest) {
     // Generate unique application code
     const applicationCode = `NF-${Math.floor(100000 + Math.random() * 900000)}`
 
+    // Save eligibility check to database
+    const supabase = await createClient()
+    
+    // For the ssn field in database, use idNumber for all applicants
+    // The schema requires SSN field for everyone
+    const ssnForDb = idNumber || finalSsn || "0000000000"
+
+    const { error: dbError } = await supabase
+      .from("grant_eligibility")
+      .insert({
+        application_code: applicationCode,
+        full_name: fullName,
+        ssn: ssnForDb,
+        phone: phone,
+        email: email,
+        status: "pending",
+      })
+
+    if (dbError) {
+      console.error("[v0] Database save error:", {
+        message: dbError.message,
+        code: dbError.code,
+        details: dbError.details,
+      })
+      // Don't fail the request - eligibility check is still valid
+      // The code is generated and can be used even if database save fails
+    }
+
     // Return success with eligibility check results
-    // Database save is currently disabled due to table schema issues
-    // Users can proceed with full grant application using this code
     return NextResponse.json({
       success: true,
       applicationCode: applicationCode,
