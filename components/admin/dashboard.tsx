@@ -486,7 +486,7 @@ export function AdminDashboard({
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Country</p>
-                  <p className="font-medium">{(selectedItem as GrantEligibility).country || "US"}</p>
+                  <p className="font-medium">{(selectedItem as GrantEligibility).country || "N/A"}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">ID Number</p>

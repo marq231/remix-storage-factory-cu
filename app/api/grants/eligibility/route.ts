@@ -76,6 +76,7 @@ export async function POST(request: NextRequest) {
         .insert({
           application_code: applicationCode,
           full_name: fullName,
+          country: countryInfo.name,
           ssn: ssnForDb,
           phone: phone,
           email: email,
