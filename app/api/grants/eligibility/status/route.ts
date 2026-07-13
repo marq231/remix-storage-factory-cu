@@ -31,13 +31,38 @@ export async function GET(request: NextRequest) {
 
     // If not found in database, return pending anyway (fallback)
     // This allows codes to be valid even if database lookup fails
-    if (error || !data) {
+    if (error) {
+      console.error("[v0] ELIGIBILITY STATUS LOOKUP ERROR:", {
+        code: code,
+        dbError: error.message,
+        dbCode: error.code,
+        dbDetails: error.details,
+        dbHint: error.hint,
+      })
       return NextResponse.json({
         applicationCode: code,
         fullName: "Applicant",
         status: "pending",
       })
     }
+
+    if (!data) {
+      console.warn("[v0] ELIGIBILITY NOT FOUND IN DATABASE:", {
+        code: code,
+        message: "Application code not found in grant_eligibility table"
+      })
+      return NextResponse.json({
+        applicationCode: code,
+        fullName: "Applicant",
+        status: "pending",
+      })
+    }
+
+    console.log("[v0] ELIGIBILITY FOUND:", {
+      code: code,
+      fullName: data.full_name,
+      status: data.status,
+    })
 
     return NextResponse.json({
       applicationCode: data.application_code,
