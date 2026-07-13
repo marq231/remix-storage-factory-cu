@@ -117,6 +117,21 @@ export async function POST(request: NextRequest) {
         maxRetries: maxRetries,
         applicant: fullName,
       })
+      return NextResponse.json(
+        { error: "Failed to generate unique application code. Please try again." },
+        { status: 500 }
+      )
+    }
+
+    if (dbError) {
+      console.error("[v0] ELIGIBILITY SAVE FAILED - RETURNING ERROR:", {
+        error: dbError.message,
+        code: dbError.code,
+      })
+      return NextResponse.json(
+        { error: "Failed to save eligibility application to database" },
+        { status: 500 }
+      )
     }
 
     // Return success with eligibility check results

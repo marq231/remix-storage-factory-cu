@@ -47,10 +47,11 @@ export async function GET(request: NextRequest) {
     }
 
     if (!data) {
-      console.warn("[v0] ELIGIBILITY NOT FOUND IN DATABASE:", {
+      console.warn("[v0] ELIGIBILITY NOT FOUND IN DATABASE - RETURNING FALLBACK:", {
         code: code,
-        message: "Application code not found in grant_eligibility table"
+        message: "Application code not found in grant_eligibility table - THIS IS THE PROBLEM"
       })
+      // RETURNING FALLBACK - THIS SHOWS "APPLICANT" INSTEAD OF REAL NAME
       return NextResponse.json({
         applicationCode: code,
         fullName: "Applicant",
@@ -58,7 +59,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    console.log("[v0] ELIGIBILITY FOUND:", {
+    console.log("[v0] ELIGIBILITY FOUND - RETURNING REAL DATA:", {
       code: code,
       fullName: data.full_name,
       status: data.status,
