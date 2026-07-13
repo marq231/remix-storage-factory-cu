@@ -125,11 +125,18 @@ export async function POST(request: NextRequest) {
 
     if (dbError) {
       console.error("[v0] ELIGIBILITY SAVE FAILED - RETURNING ERROR:", {
-        error: dbError.message,
+        message: dbError.message,
         code: dbError.code,
+        details: dbError.details,
+        hint: dbError.hint,
+        fullError: JSON.stringify(dbError),
       })
       return NextResponse.json(
-        { error: "Failed to save eligibility application to database" },
+        { 
+          error: "Failed to save eligibility application to database",
+          details: dbError.message,
+          code: dbError.code
+        },
         { status: 500 }
       )
     }

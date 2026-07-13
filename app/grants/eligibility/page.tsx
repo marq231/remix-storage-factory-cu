@@ -80,10 +80,14 @@ export default function EligibilityPage() {
 
       const data = await response.json()
 
+      console.log("[v0] Eligibility API Response:", { status: response.status, data })
+
       if (response.ok) {
         router.push(`/grants/eligibility/status?code=${data.applicationCode}`)
       } else {
-        setErrors({ submit: data.error || "Something went wrong. Please try again." })
+        const errorMessage = data.details ? `${data.error} - ${data.details}` : (data.error || "Something went wrong. Please try again.")
+        console.error("[v0] Eligibility API Error:", { error: data.error, details: data.details, code: data.code })
+        setErrors({ submit: errorMessage })
       }
     } catch {
       setErrors({ submit: "Network error. Please check your connection and try again." })
