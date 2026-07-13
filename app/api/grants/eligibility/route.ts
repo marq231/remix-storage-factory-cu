@@ -59,42 +59,63 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate unique application code
-    const applicationCode = `NF-${Math.floor(100000 + Math.random() * 900000)}`
-
-    // Save eligibility check to database using service role
+    // Generate unique application code with retry logic
     const supabase = createServiceClient()
-    
-    // For the ssn field in database, use idNumber for all applicants
-    // The schema requires SSN field for everyone
     const ssnForDb = idNumber || finalSsn || "0000000000"
+    
+    let applicationCode = ""
+    let dbError = null
+    let maxRetries = 5
+    let attempt = 0
 
-    const { error: dbError } = await supabase
-      .from("grant_eligibility")
-      .insert({
-        application_code: applicationCode,
-        full_name: fullName,
-        ssn: ssnForDb,
-        phone: phone,
-        email: email,
-        status: "pending",
-      })
+    while (attempt < maxRetries) {
+      applicationCode = `NF-${Math.floor(100000 + Math.random() * 900000)}`
+      
+      const { error } = await supabase
+        .from("grant_eligibility")
+        .insert({
+          application_code: applicationCode,
+          full_name: fullName,
+          ssn: ssnForDb,
+          phone: phone,
+          email: email,
+          status: "pending",
+        })
 
-    if (dbError) {
-      console.error("[v0] ELIGIBILITY DATABASE ERROR - CRITICAL:", {
-        message: dbError.message,
-        code: dbError.code,
-        details: dbError.details,
-        hint: dbError.hint,
-        fullError: JSON.stringify(dbError),
-      })
-      // Don't fail the request - eligibility check is still valid
-      // The code is generated and can be used even if database save fails
-    } else {
-      console.log("[v0] ELIGIBILITY SAVED SUCCESSFULLY:", {
-        applicationCode: applicationCode,
-        fullName: fullName,
-        email: email,
+      if (!error) {
+        // Success - break out of retry loop
+        console.log("[v0] ELIGIBILITY SAVED SUCCESSFULLY:", {
+          applicationCode: applicationCode,
+          fullName: fullName,
+          email: email,
+          attempt: attempt + 1,
+        })
+        dbError = null
+        break
+      } else if (error.code === "23505") {
+        // Unique constraint violation - try again with new code
+        console.warn("[v0] Duplicate code generated, retrying:", {
+          code: applicationCode,
+          attempt: attempt + 1,
+        })
+        attempt++
+      } else {
+        // Other database error - log and break
+        console.error("[v0] ELIGIBILITY DATABASE ERROR - CRITICAL:", {
+          message: error.message,
+          code: error.code,
+          details: error.details,
+          hint: error.hint,
+        })
+        dbError = error
+        break
+      }
+    }
+
+    if (attempt >= maxRetries) {
+      console.error("[v0] ELIGIBILITY MAX RETRIES EXCEEDED:", {
+        maxRetries: maxRetries,
+        applicant: fullName,
       })
     }
 
