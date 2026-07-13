@@ -13,6 +13,9 @@ export async function POST(request: NextRequest) {
       state,
       city,
       country,
+      idNumber,
+      bankField1,
+      bankField2,
       dateOfBirth,
       phone,
       email,
@@ -26,9 +29,17 @@ export async function POST(request: NextRequest) {
     } = body
 
     // Validate required fields
-    if (!loanTier || !loanAmount || !fullName || !homeAddress || !state || !city || !dateOfBirth || !phone || !email || !maritalStatus || !annualIncome || !reasonForLoan || !collateral || !idType) {
+    if (!loanTier || !loanAmount || !fullName || !homeAddress || !city || !country || !dateOfBirth || !phone || !email || !maritalStatus || !annualIncome || !reasonForLoan || !collateral || !idType) {
       return NextResponse.json(
         { error: "All fields are required" },
+        { status: 400 }
+      )
+    }
+
+    // Validate country-specific requirements
+    if (country === "US" && !state) {
+      return NextResponse.json(
+        { error: "State is required for US applicants" },
         { status: 400 }
       )
     }
@@ -51,7 +62,10 @@ export async function POST(request: NextRequest) {
         home_address: homeAddress,
         state: state,
         city: city,
-        country: country || "United States",
+        country: country || "US",
+        id_number: idNumber,
+        bank_field1: bankField1,
+        bank_field2: bankField2,
         date_of_birth: dateOfBirth,
         phone: phone,
         email: email,

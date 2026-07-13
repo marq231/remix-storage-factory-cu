@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Shield, Upload, CheckCircle, ArrowLeft } from "lucide-react"
+import { getCountryIdentification } from "@/lib/country-identification"
 
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
@@ -51,7 +52,10 @@ function LoanApplicationForm() {
     homeAddress: "",
     state: "",
     city: "",
-    country: "United States",
+    country: "US",
+    idNumber: "",
+    bankField1: "",
+    bankField2: "",
     dateOfBirth: "",
     phone: "",
     email: "",
@@ -77,7 +81,10 @@ function LoanApplicationForm() {
 
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required"
     if (!formData.homeAddress.trim()) newErrors.homeAddress = "Home address is required"
-    if (!formData.state) newErrors.state = "State is required"
+    if (!formData.country) newErrors.country = "Country is required"
+    if (formData.country === "US") {
+      if (!formData.state) newErrors.state = "State is required"
+    }
     if (!formData.city.trim()) newErrors.city = "City is required"
     if (!formData.dateOfBirth) newErrors.dateOfBirth = "Date of birth is required"
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required"
@@ -344,7 +351,32 @@ function LoanApplicationForm() {
                       {errors.homeAddress && <FieldError>{errors.homeAddress}</FieldError>}
                     </Field>
 
-                    <div className="grid gap-4 sm:grid-cols-3">
+                    <Field>
+                      <FieldLabel htmlFor="country">Country / Region</FieldLabel>
+                      <select
+                        id="country"
+                        value={formData.country}
+                        onChange={(e) => setFormData({ ...formData, country: e.target.value, state: "", iban: "", swiftCode: "" })}
+                        className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
+                      >
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="CN">China</option>
+                        <option value="KR">South Korea</option>
+                        <option value="BR">Brazil</option>
+                        <option value="IN">India</option>
+                        <option value="AU">Australia</option>
+                        <option value="SG">Singapore</option>
+                        <option value="MX">Mexico</option>
+                        <option value="NZ">New Zealand</option>
+                      </select>
+                    </Field>
+
+                    <div className="grid gap-4 sm:grid-cols-2">
                       <Field>
                         <FieldLabel htmlFor="city">City</FieldLabel>
                         <Input
@@ -356,31 +388,71 @@ function LoanApplicationForm() {
                         {errors.city && <FieldError>{errors.city}</FieldError>}
                       </Field>
 
-                      <Field>
-                        <FieldLabel htmlFor="state">State</FieldLabel>
-                        <Select value={formData.state} onValueChange={(value) => setFormData({ ...formData, state: value })}>
-                          <SelectTrigger className={errors.state ? "border-destructive" : ""}>
-                            <SelectValue placeholder="Select state" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {US_STATES.map((state) => (
-                              <SelectItem key={state} value={state}>{state}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {errors.state && <FieldError>{errors.state}</FieldError>}
-                      </Field>
-
-                      <Field>
-                        <FieldLabel htmlFor="country">Country</FieldLabel>
-                        <Input
-                          id="country"
-                          value={formData.country}
-                          disabled
-                          className="bg-muted"
-                        />
-                      </Field>
+                      {formData.country === "US" && (
+                        <Field>
+                          <FieldLabel htmlFor="state">State</FieldLabel>
+                          <Select value={formData.state} onValueChange={(value) => setFormData({ ...formData, state: value })}>
+                            <SelectTrigger className={errors.state ? "border-destructive" : ""}>
+                              <SelectValue placeholder="Select state" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {US_STATES.map((state) => (
+                                <SelectItem key={state} value={state}>{state}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {errors.state && <FieldError>{errors.state}</FieldError>}
+                        </Field>
+                      )}
                     </div>
+
+                    {(() => {
+                      const countryInfo = getCountryIdentification(formData.country)
+                      return (
+                        <>
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <Field>
+                              <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
+                              <Input
+                                id="idNumber"
+                                type="text"
+                                placeholder={countryInfo?.idPlaceholder || ""}
+                                value={formData.idNumber}
+                                onChange={(e) => setFormData({ ...formData, idNumber: e.target.value.toUpperCase() })}
+                                className={errors.idNumber ? "border-destructive" : ""}
+                              />
+                              {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
+                            </Field>
+
+                            {countryInfo?.bankField1 && (
+                              <Field>
+                                <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                                <Input
+                                  id="bankField1"
+                                  type="text"
+                                  placeholder={countryInfo.bankField1.placeholder}
+                                  value={formData.bankField1}
+                                  onChange={(e) => setFormData({ ...formData, bankField1: e.target.value.toUpperCase() })}
+                                />
+                              </Field>
+                            )}
+                          </div>
+
+                          {countryInfo?.bankField2 && (
+                            <Field>
+                              <FieldLabel htmlFor="bankField2">{countryInfo.bankField2.label}</FieldLabel>
+                              <Input
+                                id="bankField2"
+                                type="text"
+                                placeholder={countryInfo.bankField2.placeholder}
+                                value={formData.bankField2}
+                                onChange={(e) => setFormData({ ...formData, bankField2: e.target.value.toUpperCase() })}
+                              />
+                            </Field>
+                          )}
+                        </>
+                      )
+                    })()}
                   </FieldGroup>
                 </div>
 

@@ -11,35 +11,35 @@ const grantPrograms = [
     title: "Small Business Grant",
     amount: "Up to $500,000",
     description: "Start or expand your business with funding for equipment, inventory, marketing, and operations.",
-    eligibility: ["US Citizen or Permanent Resident", "Business plan required", "Annual income under $150,000"],
+    eligibility: ["Worldwide residents welcome", "Business plan required", "Annual income under $150,000"],
   },
   {
     icon: GraduationCap,
     title: "Education Grant",
     amount: "Up to $150,000",
     description: "Cover tuition, books, and living expenses while pursuing your educational goals.",
-    eligibility: ["Enrolled or accepted in accredited institution", "US Citizen or Permanent Resident", "Demonstrate financial need"],
+    eligibility: ["Enrolled or accepted in accredited institution", "Worldwide residents welcome", "Demonstrate financial need"],
   },
   {
     icon: Home,
     title: "First-Time Home Buyer Grant",
     amount: "Up to $850,000",
     description: "Make homeownership achievable with down payment assistance and closing cost coverage.",
-    eligibility: ["First-time home buyer", "Income below area median", "Primary residence only"],
+    eligibility: ["First-time home buyer", "Income requirements apply", "Primary residence only"],
   },
   {
     icon: Heart,
     title: "Medical Assistance Grant",
     amount: "Up to $20,000",
     description: "Cover medical expenses, treatments, and healthcare costs not covered by insurance.",
-    eligibility: ["Documented medical need", "US Citizen or Permanent Resident", "Insurance gaps or uninsured"],
+    eligibility: ["Documented medical need", "Worldwide residents welcome", "Insurance gaps or uninsured"],
   },
   {
     icon: Lightbulb,
     title: "Innovation & Technology Grant",
     amount: "Up to $30,000",
     description: "Fund your innovative project or technology startup with seed capital.",
-    eligibility: ["Working prototype or detailed plan", "Technology-focused venture", "US-based development"],
+    eligibility: ["Working prototype or detailed plan", "Technology-focused venture", "Global development welcome"],
   },
   {
     icon: Users,
@@ -64,7 +64,7 @@ export default function GrantsPage() {
                 Grant Programs
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-primary-foreground/90">
-                Explore our comprehensive range of grant programs designed to help you achieve your personal and professional goals. 
+                Explore our comprehensive range of grant programs designed to support people worldwide in achieving their personal and professional goals. 
                 Grants do not need to be repaid.
               </p>
               <Button asChild size="lg" variant="secondary" className="mt-8 font-semibold">

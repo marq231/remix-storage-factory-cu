@@ -35,9 +35,13 @@ interface GrantEligibility {
   id: string
   application_code: string
   full_name: string
-  ssn: string
+  ssn?: string
   phone: string
   email: string
+  country?: string
+  id_number?: string
+  bank_field1?: string
+  bank_field2?: string
   status: "pending" | "approved" | "rejected"
   created_at: string
 }
@@ -50,6 +54,9 @@ interface GrantApplication {
   state: string
   city: string
   country: string
+  id_number?: string
+  bank_field1?: string
+  bank_field2?: string
   date_of_birth: string
   phone: string
   email: string
@@ -73,6 +80,9 @@ interface LoanApplication {
   state: string
   city: string
   country: string
+  id_number?: string
+  bank_field1?: string
+  bank_field2?: string
   date_of_birth: string
   phone: string
   email: string
@@ -475,9 +485,25 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as GrantEligibility).full_name}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">SSN</p>
-                  <p className="font-mono">{(selectedItem as GrantEligibility).ssn}</p>
+                  <p className="text-sm text-muted-foreground">Country</p>
+                  <p className="font-medium">{(selectedItem as GrantEligibility).country || "N/A"}</p>
                 </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">ID Number</p>
+                  <p className="font-mono text-sm">{(selectedItem as GrantEligibility).id_number || (selectedItem as GrantEligibility).ssn || "N/A"}</p>
+                </div>
+                {(selectedItem as GrantEligibility).bank_field1 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 1</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).bank_field1}</p>
+                  </div>
+                )}
+                {(selectedItem as GrantEligibility).bank_field2 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 2</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantEligibility).bank_field2}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
                   <p>{(selectedItem as GrantEligibility).phone}</p>
@@ -528,13 +554,39 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as GrantApplication).full_name}</p>
                 </div>
                 <div>
+                  <p className="text-sm text-muted-foreground">Country</p>
+                  <p className="font-medium">{(selectedItem as GrantApplication).country}</p>
+                </div>
+                <div>
                   <p className="text-sm text-muted-foreground">Date of Birth</p>
                   <p>{(selectedItem as GrantApplication).date_of_birth}</p>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <p className="text-sm text-muted-foreground">Address</p>
-                  <p>{(selectedItem as GrantApplication).home_address}, {(selectedItem as GrantApplication).city}, {(selectedItem as GrantApplication).state}</p>
+                  <p>{(selectedItem as GrantApplication).home_address}</p>
                 </div>
+                <div className="col-span-2">
+                  <p className="text-sm text-muted-foreground">City{(selectedItem as GrantApplication).state && " / State"}</p>
+                  <p>{(selectedItem as GrantApplication).city}{(selectedItem as GrantApplication).state && `, ${(selectedItem as GrantApplication).state}`}</p>
+                </div>
+                {(selectedItem as GrantApplication).id_number && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">ID Number</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).id_number}</p>
+                  </div>
+                )}
+                {(selectedItem as GrantApplication).bank_field1 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 1</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).bank_field1}</p>
+                  </div>
+                )}
+                {(selectedItem as GrantApplication).bank_field2 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 2</p>
+                    <p className="font-mono text-sm">{(selectedItem as GrantApplication).bank_field2}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
                   <p>{(selectedItem as GrantApplication).phone}</p>
@@ -650,13 +702,39 @@ export function AdminDashboard({
                   <p className="font-medium">{(selectedItem as LoanApplication).full_name}</p>
                 </div>
                 <div>
+                  <p className="text-sm text-muted-foreground">Country</p>
+                  <p className="font-medium">{(selectedItem as LoanApplication).country}</p>
+                </div>
+                <div>
                   <p className="text-sm text-muted-foreground">Date of Birth</p>
                   <p>{(selectedItem as LoanApplication).date_of_birth}</p>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <p className="text-sm text-muted-foreground">Address</p>
-                  <p>{(selectedItem as LoanApplication).home_address}, {(selectedItem as LoanApplication).city}, {(selectedItem as LoanApplication).state}</p>
+                  <p>{(selectedItem as LoanApplication).home_address}</p>
                 </div>
+                <div className="col-span-2">
+                  <p className="text-sm text-muted-foreground">City{(selectedItem as LoanApplication).state && " / State"}</p>
+                  <p>{(selectedItem as LoanApplication).city}{(selectedItem as LoanApplication).state && `, ${(selectedItem as LoanApplication).state}`}</p>
+                </div>
+                {(selectedItem as LoanApplication).id_number && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">ID Number</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).id_number}</p>
+                  </div>
+                )}
+                {(selectedItem as LoanApplication).bank_field1 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 1</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).bank_field1}</p>
+                  </div>
+                )}
+                {(selectedItem as LoanApplication).bank_field2 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Bank Field 2</p>
+                    <p className="font-mono text-sm">{(selectedItem as LoanApplication).bank_field2}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
                   <p>{(selectedItem as LoanApplication).phone}</p>

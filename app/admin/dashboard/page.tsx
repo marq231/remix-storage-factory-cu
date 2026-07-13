@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
+import { createServiceClient } from "@/lib/supabase/server"
 import { AdminDashboard } from "@/components/admin/dashboard"
 
 export default async function AdminDashboardPage() {
@@ -12,7 +12,8 @@ export default async function AdminDashboardPage() {
     redirect("/admin")
   }
 
-  const supabase = await createClient()
+  // Use service role client to bypass RLS and read all application data
+  const supabase = createServiceClient()
 
   // Fetch all applications
   const [

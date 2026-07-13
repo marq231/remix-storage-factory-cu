@@ -33,11 +33,11 @@ export default function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="font-serif text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl lg:text-6xl text-balance">
-                  Financial Assistance for Every American
+                  Global Financial Opportunities for Everyone
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-primary-foreground/90 max-w-2xl">
-                  Access grants up to $850,000 and low-interest loans to help you achieve your goals. 
-                  Whether {"you're"} starting a business, pursuing education, or buying a home, {"we're"} here to help.
+                  Access grants up to $850,000 and low-interest loans for people worldwide. 
+                  Whether {"you're"} starting a business, pursuing education, buying a home, or facing medical challenges, we support your dreams globally.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Button asChild size="lg" variant="secondary" className="font-semibold">
@@ -56,7 +56,7 @@ export default function HomePage() {
                   <div className="absolute -inset-4 bg-primary-foreground/10 rounded-2xl blur-2xl"></div>
                   <Image
                     src="/images/hero-family.jpg"
-                    alt="Happy American family achieving their dream of homeownership through NextFund US financial assistance"
+                    alt="Happy family achieving their dream of homeownership through NextFund global financial assistance"
                     width={600}
                     height={400}
                     className="relative rounded-2xl shadow-2xl object-cover"

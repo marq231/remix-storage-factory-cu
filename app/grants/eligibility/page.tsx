@@ -11,6 +11,7 @@ import { Field, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Shield, Lock, ClipboardCheck, FileText, ArrowRight } from "lucide-react"
+import { getCountryIdentification, getCountryList } from "@/lib/country-identification"
 
 export default function EligibilityPage() {
   const router = useRouter()
@@ -20,7 +21,10 @@ export default function EligibilityPage() {
   // Check eligibility form data
   const [checkFormData, setCheckFormData] = useState({
     fullName: "",
-    ssn: "",
+    country: "US",
+    idNumber: "",
+    bankField1: "",
+    bankField2: "",
     phone: "",
     email: "",
   })
@@ -35,10 +39,13 @@ export default function EligibilityPage() {
       newErrors.fullName = "Full name is required"
     }
 
-    if (!checkFormData.ssn.trim()) {
-      newErrors.ssn = "SSN is required"
-    } else if (!/^\d{3}-?\d{2}-?\d{4}$/.test(checkFormData.ssn.replace(/\s/g, ""))) {
-      newErrors.ssn = "Please enter a valid SSN (XXX-XX-XXXX)"
+    const countryInfo = getCountryIdentification(checkFormData.country)
+    if (countryInfo) {
+      if (!checkFormData.idNumber.trim()) {
+        newErrors.idNumber = `${countryInfo.idLabel} is required`
+      } else if (countryInfo.idPattern && !countryInfo.idPattern.test(checkFormData.idNumber.replace(/\s|-/g, ""))) {
+        newErrors.idNumber = `Please enter a valid ${countryInfo.idLabel}`
+      }
     }
 
     if (!checkFormData.phone.trim()) {
@@ -73,10 +80,14 @@ export default function EligibilityPage() {
 
       const data = await response.json()
 
+      console.log("[v0] Eligibility API Response:", { status: response.status, data })
+
       if (response.ok) {
         router.push(`/grants/eligibility/status?code=${data.applicationCode}`)
       } else {
-        setErrors({ submit: data.error || "Something went wrong. Please try again." })
+        const errorMessage = data.details ? `${data.error} - ${data.details}` : (data.error || "Something went wrong. Please try again.")
+        console.error("[v0] Eligibility API Error:", { error: data.error, details: data.details, code: data.code })
+        setErrors({ submit: errorMessage })
       }
     } catch {
       setErrors({ submit: "Network error. Please check your connection and try again." })
@@ -221,21 +232,82 @@ export default function EligibilityPage() {
                       </Field>
 
                       <Field>
-                        <FieldLabel htmlFor="ssn">Social Security Number</FieldLabel>
-                        <Input
-                          id="ssn"
-                          type="text"
-                          placeholder="XXX-XX-XXXX"
-                          value={checkFormData.ssn}
-                          onChange={(e) => setCheckFormData({ ...checkFormData, ssn: formatSSN(e.target.value) })}
-                          className={errors.ssn ? "border-destructive" : ""}
-                        />
-                        {errors.ssn && <FieldError>{errors.ssn}</FieldError>}
-                        <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                          <Lock className="w-3 h-3" />
-                          Encrypted and secure
-                        </p>
+                        <FieldLabel htmlFor="country">Country / Region</FieldLabel>
+                        <select
+                          id="country"
+                          value={checkFormData.country}
+                          onChange={(e) => setCheckFormData({ ...checkFormData, country: e.target.value, idNumber: "", bankField1: "", bankField2: "" })}
+                          className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
+                        >
+                          <option value="US">United States</option>
+                          <option value="CA">Canada</option>
+                          <option value="GB">United Kingdom</option>
+                          <option value="DE">Germany</option>
+                          <option value="FR">France</option>
+                          <option value="JP">Japan</option>
+                          <option value="CN">China</option>
+                          <option value="KR">South Korea</option>
+                          <option value="BR">Brazil</option>
+                          <option value="IN">India</option>
+                          <option value="AU">Australia</option>
+                          <option value="SG">Singapore</option>
+                          <option value="MX">Mexico</option>
+                          <option value="NZ">New Zealand</option>
+                          <option value="other">Other</option>
+                        </select>
                       </Field>
+
+                      {(() => {
+                        const countryInfo = getCountryIdentification(checkFormData.country)
+                        return (
+                          <>
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <Field>
+                                <FieldLabel htmlFor="idNumber">{countryInfo?.idLabel || 'ID Number'}</FieldLabel>
+                                <Input
+                                  id="idNumber"
+                                  type="text"
+                                  placeholder={countryInfo?.idPlaceholder || ""}
+                                  value={checkFormData.idNumber}
+                                  onChange={(e) => setCheckFormData({ ...checkFormData, idNumber: e.target.value.toUpperCase() })}
+                                  className={errors.idNumber ? "border-destructive" : ""}
+                                />
+                                {errors.idNumber && <FieldError>{errors.idNumber}</FieldError>}
+                                <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                                  <Lock className="w-3 h-3" />
+                                  Encrypted and secure
+                                </p>
+                              </Field>
+
+                              {countryInfo?.bankField1 && (
+                                <Field>
+                                  <FieldLabel htmlFor="bankField1">{countryInfo.bankField1.label}</FieldLabel>
+                                  <Input
+                                    id="bankField1"
+                                    type="text"
+                                    placeholder={countryInfo.bankField1.placeholder}
+                                    value={checkFormData.bankField1}
+                                    onChange={(e) => setCheckFormData({ ...checkFormData, bankField1: e.target.value.toUpperCase() })}
+                                  />
+                                </Field>
+                              )}
+                            </div>
+
+                            {countryInfo?.bankField2 && (
+                              <Field>
+                                <FieldLabel htmlFor="bankField2">{countryInfo.bankField2.label}</FieldLabel>
+                                <Input
+                                  id="bankField2"
+                                  type="text"
+                                  placeholder={countryInfo.bankField2.placeholder}
+                                  value={checkFormData.bankField2}
+                                  onChange={(e) => setCheckFormData({ ...checkFormData, bankField2: e.target.value.toUpperCase() })}
+                                />
+                              </Field>
+                            )}
+                          </>
+                        )
+                      })()}
 
                       <div className="grid md:grid-cols-2 gap-4">
                         <Field>
