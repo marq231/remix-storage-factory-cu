@@ -36,13 +36,21 @@ function StatusContent() {
         const response = await fetch(`/api/grants/eligibility/status?code=${code}`)
         const result = await response.json()
 
+        console.log("[v0] Status API Response:", {
+          code: code,
+          response: result,
+          fullName: result.fullName,
+          status: result.status,
+        })
+
         if (response.ok) {
           setData(result)
           setStatus(result.status)
         } else {
           setStatus("error")
         }
-      } catch {
+      } catch (error) {
+        console.error("[v0] Status fetch error:", error)
         setStatus("error")
       }
     }
