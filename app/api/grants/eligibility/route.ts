@@ -145,6 +145,7 @@ export async function POST(request: NextRequest) {
     // Return success with eligibility check results
     return NextResponse.json({
       success: true,
+      apiVersion: "intl-country-fix-v2",
       applicationCode: applicationCode,
       country: country,
       fullName: fullName,
